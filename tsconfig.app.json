@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    /* Kompilacja */
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+
+    /* JSX i React 18 */
+    "jsx": "react-jsx",
+
+    /* Interoperacyjność z CommonJS */
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+
+    /* Kontrola jakości kodu */
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* Pomijanie sprawdzania typów w node_modules */
+    "skipLibCheck": true
+  },
+  "include": [
+    "src",
+    "global.d.ts",
+    "vite-env.d.ts"
+  ]
+}

@@ -1,0 +1,56 @@
+/* index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==================== *
+ *   Warstwa globalna   *
+ * ==================== */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-graphite text-white font-body;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tighter;
+  }
+  h1 { @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl; }
+  h2 { @apply text-3xl sm:text-4xl md:text-5xl; }
+  h3 { @apply text-2xl sm:text-3xl md:text-4xl; }
+}
+
+/* =========================== *
+ *   Komponenty TailwindCSS    *
+ * =========================== */
+@layer components {
+  .container {
+    @apply px-4 mx-auto max-w-7xl;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center px-6 py-3 text-lg font-medium rounded-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+  .btn-primary {
+    @apply bg-white text-graphite hover:bg-neon hover:text-white focus:ring-neon;
+  }
+  .btn-secondary {
+    @apply border-2 border-white text-white hover:bg-white hover:text-graphite focus:ring-white;
+  }
+  .form-input {
+    @apply w-full px-4 py-3 bg-metallic border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-neon text-white placeholder-gray-400;
+  }
+  .link-hover {
+    @apply relative overflow-hidden;
+  }
+  .link-hover::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-[2px] bg-neon transition-all duration-300;
+  }
+  .link-hover:hover::after {
+    @apply w-full;
+  }
+}
+

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ekspresja Tattoo Studio</title>
+  <base href="./" />
+
+  <!-- Twoje style ogólne -->
+  <link rel="stylesheet" href="/src/index.css" />
+
+  <!-- Stylizacja tylko launchera Voiceflow -->
+  <style>
+    .vfrc-launcher {
+      background-color: #B900FF !important; /* Twój kolor marki */
+      width: 56px !important;
+      height: 56px !important;
+      border-radius: 50% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+    }
+
+    /* Nadpisanie fontu launchera */
+    .vfrc-widget *, .vfrc-launcher * {
+      font-family: inherit !important;
+    }
+  </style>
+</head>
+
+<body class="bg-graphite text-white font-body">
+  <div id="root"></div>
+
+  <!-- Twoje Reactowe aplikacje -->
+  <script type="module" src="/src/main.tsx"></script>
+
+  <!-- Integracja Voiceflow -->
+  <script type="text/javascript">
+    (function(d, t) {
+      var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+      v.onload = function() {
+        window.voiceflow.chat.load({
+          verify: { projectID: '67a994bb0ce33d8fbbf84452' },
+          url: 'https://general-runtime.voiceflow.com',
+          versionID: 'production',
+          voice: {
+            url: "https://runtime-api.voiceflow.com"
+          }
+        });
+      };
+      v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; 
+      v.type = "text/javascript"; 
+      v.async = true;
+      s.parentNode.insertBefore(v, s);
+    })(document, 'script');
+  </script>
+</body>
+</html>
