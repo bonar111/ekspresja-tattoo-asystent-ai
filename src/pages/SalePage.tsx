@@ -7,7 +7,7 @@ import Process from '../components/sales/Process';
 import FinalCTA from '../components/sales/FinalCTA';
 import { useEffect } from 'react';
 
-const HomePage = () => {
+const SalePage = () => {
   useEffect(() => {
     document.title = 'Twoja Przewaga | Zapisy sesji AI';
   }, []);
@@ -25,4 +25,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default SalePage;

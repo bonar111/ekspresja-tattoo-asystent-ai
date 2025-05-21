@@ -9,6 +9,7 @@ import ArtistPortfolioPage from './pages/ArtistPortfolioPage';
 import BlogPage from './pages/BlogPage';
 import BookingPage from './pages/BookingPage';
 import ThankYouPage from './pages/ThankYouPage';
+import SalePage from './pages/SalePage';
 
 const App: React.FC = () => {
   return (
@@ -17,7 +18,9 @@ const App: React.FC = () => {
       <Route path="/" element={<Layout />}>
         {/* strona główna */}
         <Route index element={<HomePage />} />
+        <Route path="sale" element={<SalePage />} />
 
+        {/* strona z portfolio */}
         {/* podstrony */}
         <Route path="team" element={<TeamPage />} />
         <Route path="artist/:id" element={<ArtistPortfolioPage />} />

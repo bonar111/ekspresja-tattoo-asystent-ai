@@ -19,10 +19,10 @@ const Hero = () => {
           className="max-w-2xl mx-auto"
         >
           <h1 className="mb-4 text-4xl sm:text-5xl font-bold leading-tight">
-            Twój tatuaż zaczyna się tutaj
+            Twoja przewaga dzieki AI  
           </h1>
           <p className="text-lg sm:text-xl mb-8">
-            Opowiedz nam o swoim pomyśle – szybko, wygodnie i bez zobowiązań. Pomożemy Ci stworzyć projekt, o którym marzysz.
+            Dzieki inteligentnemu chacingowi, zyskujesz przewage nad konkurencja.
           </p>
           <motion.button
             whileHover={{ scale: 1.05 }}
