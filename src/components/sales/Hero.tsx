@@ -19,10 +19,10 @@ const Hero = () => {
           className="max-w-2xl mx-auto"
         >
           <h1 className="mb-4 text-4xl sm:text-5xl font-bold leading-tight">
-            Twoja przewaga dzieki AI  
+            🤖 AI Asystent dla Twojego Studia Tatuażu
           </h1>
           <p className="text-lg sm:text-xl mb-8">
-            Dzieki inteligentnemu chacingowi, zyskujesz przewage nad konkurencja.
+            Zamień 80% rozmów w rezerwacje – bez odpisywania.
           </p>
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -32,7 +32,7 @@ const Hero = () => {
               if (window.voiceflow?.chat) window.voiceflow.chat.open();
             }}
           >
-            Rozpocznij rozmowę
+            Zobacz demo
           </motion.button>
         </motion.div>
       </div>

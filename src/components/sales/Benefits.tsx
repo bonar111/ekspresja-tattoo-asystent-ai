@@ -35,28 +35,28 @@ const Benefits = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-16 text-3xl font-heading"
         >
-          Dlaczego warto wybrać Ekspresję?
+          Przestań marnować czas – zacznij sprzedawać automatycznie
         </motion.h2>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <Benefit 
             icon={<Clock size={32} />}
-            title="Szybka konsultacja online"
-            description="Skontaktuj się z nami błyskawicznie – konsultacja dostępna przez całą dobę, 7 dni w tygodniu."
+            title="Rozmawia 24/7"
+            description="Klienci nigdy nie czekają – asystent odpowiada błyskawicznie przez całą dobę."
             delay={0.2}
           />
           <Benefit 
             icon={<Palette size={32} />}
-            title="Darmowy projekt tatuażu"
-            description="Przygotujemy bezpłatny projekt, który idealnie wpisze się w Twoje oczekiwania i osobisty styl."
+            title="Wycena i rezerwacja"
+            description="Automatyczna wycena i rezerwacja terminów – bez Twojego udziału."
             delay={0.4}
           />
           <Benefit 
             icon={<Fingerprint size={32} />}
-            title="Wyjątkowy jak Ty"
-            description="Każdy tatuaż to indywidualny projekt, który podkreśli Twój unikalny charakter."
+            title="Gotowi klienci"
+            description="Otrzymujesz tylko zdecydowanych klientów, gotowych na sesję."
             delay={0.6}
           />
         </div>

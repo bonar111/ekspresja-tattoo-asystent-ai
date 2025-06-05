@@ -12,10 +12,9 @@ const Proof = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="mb-6">Bezpieczeństwo i higiena na pierwszym miejscu</h2>
+            <h2 className="mb-6">Więcej sesji, większe zarobki</h2>
             <p className="text-lg mb-8 text-gray-300">
-              W Ekspresji Twoje zdrowie i komfort są dla nas priorytetem. Pracujemy zgodnie z najwyższymi standardami sanitarnymi, 
-              używając wyłącznie sterylnego, jednorazowego sprzętu i tuszy najwyższej jakości.
+              Nasz asystent AI zwiększa liczbę rezerwacji średnio o 30% i eliminuje ryzyko utraty klienta.
             </p>
             
             <div className="space-y-6">
@@ -24,9 +23,9 @@ const Proof = () => {
                   <Award size={24} className="text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl mb-2">Certyfikowani artyści</h3>
+                  <h3 className="text-xl mb-2">Wzrost rezerwacji</h3>
                   <p className="text-gray-300">
-                    Każdy z naszych tatuatorów posiada odpowiednie kwalifikacje, doświadczenie i pasję do tworzenia wyjątkowych projektów.
+                    Aż do 30% więcej umówionych sesji dzięki natychmiastowej dwustronnej komunikacji.
                   </p>
                 </div>
               </div>
@@ -36,9 +35,9 @@ const Proof = () => {
                   <ShieldCheck size={24} className="text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl mb-2">Zatwierdzone przez sanepid</h3>
+                  <h3 className="text-xl mb-2">Zero utraconych leadów</h3>
                   <p className="text-gray-300">
-                    Nasze studio regularnie przechodzi kontrole sanitarne i spełnia wszystkie wymagania sanepidu.
+                    Klienci nie odchodzą – asystent odpowiada natychmiast, 24/7.
                   </p>
                 </div>
               </div>
@@ -48,9 +47,9 @@ const Proof = () => {
                   <Drop size={24} className="text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl mb-2">Najlepsze tusze</h3>
+                  <h3 className="text-xl mb-2">Gotowi płacić klienci</h3>
                   <p className="text-gray-300">
-                    Korzystamy wyłącznie z bezpiecznych, certyfikowanych tuszy, które zapewniają trwałość, intensywne kolory i minimalne blaknięcie.
+                    Finalizuje rezerwację i zbiera wszystkie dane – Ty dostajesz klienta gotowego na sesję.
                   </p>
                 </div>
               </div>
@@ -65,12 +64,11 @@ const Proof = () => {
             className="relative rounded-lg overflow-hidden max-w-sm mx-auto"
           >
             <img
-              src="https://static.wixstatic.com/media/be828f_7005c7665edc457a96a9101188c0f0f2~mv2.png/v1/fill/w_560,h_840,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/be828f_7005c7665edc457a96a9101188c0f0f2~mv2.png"
-              alt="Nasz proces bezpieczeństwa"
+              src="https://static.wixstatic.com/media/be828f_7005c7665edc457a96a9101188c0f0f2~mv2.png"
+              alt="Efekty Asystenta AI"
               className="w-full h-auto object-contain"
             />
           </motion.div>
-
         </div>
       </div>
     </section>
