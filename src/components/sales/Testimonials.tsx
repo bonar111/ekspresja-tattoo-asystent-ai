@@ -16,25 +16,62 @@ const testimonials: Testimonial[] = [
   {
     id: 1,
     name: 'Weronika J.',
-    text: 'AI Asystent natychmiast odpowiedział na moje pytania i pomógł mi zarezerwować sesję — rewelacja!',
+    text: 'Asystent ogarnia wszystko za mnie – terminy, wyceny, odpowiada klientom. Ja tylko tatuuję. Mega wygoda.',
     rating: 5,
-    service: ''
+    service: 'Tatuażystka, Studio Kolor'
   },
   {
     id: 2,
     name: 'Katarzyna B.',
-    text: 'Dzięki asystentowi AI mój grafik wypełnił się na miesiąc do przodu. Zero przestojów!',
+    text: 'Od kiedy mam tego bota, nie siedzę już godzinami w wiadomościach. Klient sam się zapisuje, dostaje wycenę, a ja mam spokój.',
     rating: 5,
-    service: ''
+    service: 'Tatuażystka, InkArt'
   },
   {
     id: 3,
     name: 'Magda Z.',
-    text: 'Nigdy nie sądziłam, że chatbot tak skutecznie sprzedaje — polecam każdemu studiu.',
+    text: 'Myślałam, że to będzie kolejny bajer, ale serio działa. Klienci są ogarnięci, kalendarz się sam zapełnia. Sztos.',
     rating: 5,
-    service: ''
+    service: 'Właścicielka, Tattoo Space'
+  },
+  {
+    id: 4,
+    name: 'Kamil T.',
+    text: 'Nie ogarniam Instagrama, nie lubię pisać, a teraz wszystko załatwia za mnie AI. Klient dostaje info i się zapisuje bez mojego udziału.',
+    rating: 5,
+    service: 'Tatuażysta, Kraków'
+  },
+  {
+    id: 5,
+    name: 'Olena R.',
+    text: 'Asystent sam pokazuje wolne terminy, zadaje pytania i wysyła wycenę. Ja tylko sprawdzam kalendarz. Totalne ułatwienie.',
+    rating: 5,
+    service: 'Tatuażystka, Wrocław'
+  },
+  {
+    id: 6,
+    name: 'Michał D.',
+    text: 'Wcześniej odpisywałem na wiadomości po nocach. Teraz wszystko leci automatycznie, a ja mam czas dla siebie.',
+    rating: 5,
+    service: 'Tatuażysta, Warszawa'
+  },
+  {
+    id: 7,
+    name: 'Asia L.',
+    text: 'U mnie w studiu asystent ogarnia klientów wszystkich artystów. Nie ma już chaosu ani pomyłek z terminami.',
+    rating: 5,
+    service: 'Managerka, Studio w Gdańsku'
+  },
+  {
+    id: 8,
+    name: 'Bartek M.',
+    text: 'Najlepsze jest to, że asystent nie ma wolnego. Działa 24/7 i nigdy nie marudzi. Klientom się to serio podoba.',
+    rating: 5,
+    service: 'Tatuażysta, Katowice'
   }
 ];
+
+
 
 const Testimonials: React.FC = () => {
   const sliderRef = useRef<Slider | null>(null);
