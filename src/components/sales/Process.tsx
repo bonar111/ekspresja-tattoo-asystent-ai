@@ -5,26 +5,26 @@ const steps = [
   {
     id: 1,
     icon: <MessageSquare size={32} />,
-    title: '🎯 Twoja wizja',
-    description: 'Opisz swój pomysł – asystent AI od razu odpowiada na każde pytanie.'
+    title: '📨 Klient pisze wiadomość',
+    description: 'Twój klient wysyła pytanie o tatuaż. Asystent AI natychmiast reaguje, zaczynając rozmowę bez Twojego udziału'
   },
   {
     id: 2,
     icon: <Palette size={32} />,
-    title: '🛠️ Projekt i wycena',
-    description: 'AI natychmiast wycenia projekt i przedstawia dostępne terminy.'
+    title: '💬 Automatyczna wycena',
+    description: 'AI samodzielnie podaje klientowi cenę oraz wolne terminy, oszczędzając Ci czas i eliminując zbędną komunikację'
   },
   {
     id: 3,
     icon: <Clock size={32} />,
-    title: '⏳ Rezerwacja',
-    description: 'Automatyczne umówienie sesji, zapisane w Twoim kalendarzu.'
+    title: '📅 Klient rezerwuje termin',
+    description: 'Bez Twojej ingerencji klient wybiera dogodny termin i potwierdza rezerwację'
   },
   {
     id: 4,
     icon: <Heart size={32} />,
-    title: '❤️ Gotowi klienci',
-    description: 'Otrzymujesz potwierdzenie od klienta i wszystkie niezbędne dane.'
+    title: '✅ Otrzymujesz gotowego klienta',
+    description: 'Masz wszystko, czego potrzebujesz – potwierdzoną rezerwację, dane klienta i pewność, że jest gotowy na sesję'
   }
 ];
 
