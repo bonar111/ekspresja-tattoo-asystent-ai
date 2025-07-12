@@ -16,20 +16,23 @@ const Portfolio: React.FC = () => (
         </p>
       </motion.div>
 
-      {/* ===== PIONOWY EMBED Z VIMEO ===== */}
-      <div
-        className="relative mx-auto max-w-sm rounded-xl overflow-hidden shadow-lg"
-        style={{ paddingTop: '177.78%' }} // (16/9)*100%
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+        className="relative mx-auto w-full max-w-4xl rounded-xl overflow-hidden shadow-lg"
+        style={{ paddingTop: '56.25%' }}   // (9/16)*100%, czyli 16:9
       >
         <iframe
           src="https://player.vimeo.com/video/1100809585?badge=0&autopause=0&player_id=0&app_id=58479"
-          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+          title="demoAsystenAiV1"
           frameBorder="0"
           allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
           allowFullScreen
-          title="demoAsystenAiV1"
+          className="absolute inset-0 w-full h-full"
         />
-      </div>
+      </motion.div>
     </div>
   </section>
 );
