@@ -56,7 +56,7 @@ const Proof = () => {
             </div>
           </motion.div>
           
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6 }}
@@ -68,7 +68,7 @@ const Proof = () => {
               alt="Efekty Asystenta AI"
               className="w-full h-auto object-contain"
             />
-          </motion.div>
+          </motion.div> */}
         </div>
       </div>
     </section>
