@@ -32,10 +32,10 @@ const BookingPage: React.FC = () => {
     reset
   } = useForm<BookingFormInputs>({
     defaultValues: {
-      firstName: 'Jan',
-      email: 'jan.kowalski@example.com',
-      phone: '+48123456789',
-      gdprConsent: true
+      firstName: '',
+      email: '',
+      phone: '',
+      gdprConsent: false
     }
   });
 
