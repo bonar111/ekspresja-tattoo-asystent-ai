@@ -1,16 +1,25 @@
-import { Outlet } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { Outlet, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
+declare global {
+  interface Window { fbq?: any }
+}
+
 const Layout = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  
+  const location = useLocation();
+
+  // pixel na każdej zmianie URL
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    
+    if (window.fbq) {
+      window.fbq('track', 'PageView');
+    }
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -22,7 +31,6 @@ const Layout = () => {
         <Outlet />
       </main>
       <Footer />
-      {/* <MobileNav /> */}
     </div>
   );
 };
