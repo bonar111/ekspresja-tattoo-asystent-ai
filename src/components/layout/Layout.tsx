@@ -15,7 +15,7 @@ const Layout = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
-  // 1️⃣  Jednorazowy eventt „AISiteView”
+  // 1️⃣  Jednorazowy event „AISiteView”
   useSiteView();
 
   // 2️⃣  Klasyczny Meta Pixel „PageView” przy każdej zmianie URL-a
