@@ -1,23 +1,31 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+
 import Navbar from './Navbar';
 import Footer from './Footer';
+import { useSiteView } from '../../lib/useSiteView';
 
 declare global {
-  interface Window { fbq?: any }
+  interface Window {
+    fbq?: (...args: any[]) => void;
+  }
 }
 
 const Layout = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
-  // pixel na każdej zmianie URL
+  // 1️⃣  Jednorazowy event „AISiteView”
+  useSiteView();
+
+  // 2️⃣  Klasyczny Meta Pixel „PageView” przy każdej zmianie URL-a
   useEffect(() => {
     if (window.fbq) {
       window.fbq('track', 'PageView');
     }
   }, [location.pathname]);
 
+  // 3️⃣  Cienie / zmiana tła navbaru przy scrollu
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
