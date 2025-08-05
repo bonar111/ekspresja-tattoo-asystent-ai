@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { openChat } from '../../lib/openChat';
 
 const Hero = () => {
   return (
@@ -28,9 +29,7 @@ const Hero = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="btn btn-primary text-lg"
-            onClick={() => {
-              if (window.voiceflow?.chat) window.voiceflow.chat.open();
-            }}
+            onClick={openChat}
           >
             Rozpocznij rozmowę
           </motion.button>

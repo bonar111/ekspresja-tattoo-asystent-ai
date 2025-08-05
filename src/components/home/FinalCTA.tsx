@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { openChat } from '../../lib/openChat';
 
 const FinalCTA = () => {
   return (
@@ -48,11 +49,7 @@ const FinalCTA = () => {
               >
                 <button
                   className="btn btn-primary text-lg"
-                  onClick={() => {
-                    if (window.voiceflow && window.voiceflow.chat) {
-                      window.voiceflow.chat.open();
-                    }
-                  }}
+                  onClick={openChat}
                 >
                   Rozpocznij rozmowę
                 </button>

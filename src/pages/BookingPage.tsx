@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { saveClientData } from '../utils/aiAssistantApi';
+import { track } from '../lib/analytics';
 
 interface BookingFormInputs {
   firstName: string;
@@ -40,6 +41,7 @@ const BookingPage: React.FC = () => {
   });
 
   useEffect(() => {
+    track('AIFormView');
     setQueryParams(Object.fromEntries(new URLSearchParams(location.search)));
   }, [location.search]);
 
@@ -62,6 +64,15 @@ const BookingPage: React.FC = () => {
       });
 
       if (response.status === 200) {
+        +        // --------------- zdarzenie 3 -----------------
+        track('AISubmit', {
+          placement: queryParams.placement,
+          size:     queryParams.size,
+          isColour: queryParams.isColor === 'tak',
+          artist:   queryParams.artist
+        });
+        // --------------------------------------------
+
         reset();
         navigate('/podziekowania');
       }

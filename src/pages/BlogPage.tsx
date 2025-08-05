@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { ChevronDown, MessageCircle } from 'lucide-react';
+import { openChat } from '../lib/openChat';
 
 const BlogPage = () => {
   const [activeQuestion, setActiveQuestion] = useState<number | null>(null);
@@ -323,11 +324,7 @@ const BlogPage = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className="btn btn-primary w-full flex items-center justify-center"
-                  onClick={() => {
-                    if (window.voiceflow && window.voiceflow.chat) {
-                      window.voiceflow.chat.open();
-                    }
-                  }}
+                  onClick={openChat}
                 >
                   <MessageCircle size={20} className="mr-2" />
                   Ask the Bot
