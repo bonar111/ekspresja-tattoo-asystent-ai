@@ -23,7 +23,7 @@ const FinalCTA = () => {
               viewport={{ once: true }}
               className="mb-6"
             >
-              Twój nowy tatuaż czeka!
+              Zrób pierwszy krok do swojego tatuażu
             </motion.h2>
             
             <motion.p
@@ -33,8 +33,8 @@ const FinalCTA = () => {
               viewport={{ once: true }}
               className="text-xl mb-8 max-w-2xl mx-auto"
             >
-              Umów się na bezpłatną konsultację, dopracuj szczegóły z naszym zespołem i stwórz projekt, który będzie dokładnie taki, jak chcesz. Zobacz, dlaczego klienci polecają nas dalej!
-            </motion.p>
+              Szybka konsultacja online na czacie pokaże Ci wstępną wycenę, przykładowe projekty oraz dostępne terminy. Wszystko w kilka minut – bez żadnych zobowiązań
+              </motion.p>
             
             <motion.div
               initial={{ opacity: 0, y: 20 }}

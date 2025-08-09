@@ -20,10 +20,10 @@ const Hero = () => {
           className="max-w-2xl mx-auto"
         >
           <h1 className="mb-4 text-4xl sm:text-5xl font-bold leading-tight">
-            Twój tatuaż zaczyna się tutaj
+            Kolorowy, kobiecy tatuaż
           </h1>
           <p className="text-lg sm:text-xl mb-8">
-            Opowiedz nam o swoim pomyśle – szybko, wygodnie i bez zobowiązań. Pomożemy Ci stworzyć projekt, o którym marzysz.
+            Opowiedz nam o swoim pomyśle – Wycenimy Twój tautuaż w 2-3 minuty
           </p>
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -31,7 +31,7 @@ const Hero = () => {
             className="btn btn-primary text-lg"
             onClick={openChat}
           >
-            Rozpocznij rozmowę
+            Rozpocznij konsultacje
           </motion.button>
         </motion.div>
       </div>
