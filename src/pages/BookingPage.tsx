@@ -64,7 +64,7 @@ const BookingPage: React.FC = () => {
       });
 
       if (response.status === 200) {
-        +        // --------------- zdarzenie 3 -----------------
+        // --------------- zdarzenie 3 -----------------
         track('AISubmit', {
           placement: queryParams.placement,
           size:     queryParams.size,
