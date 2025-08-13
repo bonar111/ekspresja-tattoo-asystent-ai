@@ -1,10 +1,8 @@
-// src/components/home/ArtistsTeaser.tsx
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { track } from '../../lib/analytics';
 
 type Artist = { id: string; name: string; specialty: string; image: string };
-
 interface Props { artists: Artist[] }
 
 const ArtistsTeaser = ({ artists }: Props) => {
@@ -14,17 +12,17 @@ const ArtistsTeaser = ({ artists }: Props) => {
   };
 
   return (
-    <section className="py-12 bg-graphite">
+    <section className="section-tight bg-graphite">
       <div className="container">
         <motion.h2
           initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }} viewport={{ once: true }}
-          className="text-center mb-8"
+          className="text-center stack-tight"
         >
           Kto tworzy takie prace?
         </motion.h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {artists.map((a, i) => (
             <motion.div
               key={a.id}

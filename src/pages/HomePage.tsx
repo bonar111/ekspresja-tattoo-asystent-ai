@@ -11,13 +11,9 @@ import FinalCTA from '../components/home/FinalCTA';
 import ArtistsTeaser from '../components/home/ArtistsTeaser';
 import { openChat } from '../lib/openChat';
 
-// dane obrazów
 import { BEST, COVERS, homePortfolioItems } from '../data/images';
-
-// >>> korzystamy z jednego miejsca konfiguracji
 import { GridPreset, bestGrid, coversGrid } from '../data/gridConfig';
 
-/* ========= Lekki, wielokrotnego użytku Grid ========= */
 const colsToClasses = (c: GridPreset['cols']) =>
   [
     c.base === 1 ? 'grid-cols-1' : c.base === 2 ? 'grid-cols-2' : c.base === 3 ? 'grid-cols-3' : 'grid-cols-4',
@@ -54,12 +50,11 @@ const Grid = ({ items, preset }: { items: string[]; preset: GridPreset }) => {
   );
 };
 
-/* ========= Inline CTA ========= */
 const InlineCTA = ({ title, subtitle }: { title: string; subtitle: string }) => (
-  <section className="py-10 bg-graphite">
+  <section className="section-tight bg-graphite">
     <div className="container text-center">
-      <h3 className="text-2xl mb-3">{title}</h3>
-      <p className="text-gray-300 max-w-2xl mx-auto mb-5">{subtitle}</p>
+      <h3 className="text-2xl stack-tight">{title}</h3>
+      <p className="text-gray-300 max-w-2xl mx-auto stack-tight">{subtitle}</p>
       <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="btn btn-primary" onClick={openChat}>
         Rozpocznij konsultacje
       </motion.button>
@@ -76,19 +71,19 @@ const HomePage = () => {
     <>
       <Hero />
 
-      {/* BEST – na mobile 2 kolumny (reszta wg bestGrid) */}
-      <section className="py-14 bg-graphite">
+      {/* BEST */}
+      <section className="section-tight bg-graphite">
         <div className="container">
           <motion.h2
             initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4 }}
-            className="text-center mb-2"
+            className="text-center stack-tight"
           >
             Zobacz nasze prace
           </motion.h2>
-          <p className="text-center text-gray-300 mb-8">
+          <p className="text-center text-gray-300 stack-tight">
             Bezpłatna wizualizacja + wstępna wycena na czacie, bez zobowiązań
           </p>
 
@@ -101,19 +96,19 @@ const HomePage = () => {
         subtitle="Daj nam 2–3 minuty — oszacujemy cenę i pokażemy dostępne terminy."
       />
 
-      {/* COVERS – 1 kolumna, bez cropu (contain + brak aspect) */}
-      <section className="py-14 bg-metallic">
+      {/* COVERS */}
+      <section className="section-tight bg-metallic">
         <div className="container">
           <motion.h2
             initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4 }}
-            className="text-center mb-2"
+            className="text-center stack-tight"
           >
             Covery tatuażu
           </motion.h2>
-          <p className="text-center text-gray-300 mb-8">
+          <p className="text-center text-gray-300 stack-tight">
             Zmieniamy stare prace w nowe dzieła — zobacz przykłady coverów.
           </p>
 
@@ -128,30 +123,10 @@ const HomePage = () => {
 
       <ArtistsTeaser
         artists={[
-          {
-            id: 'marzena-bonar',
-            name: 'Marzena Bonar',
-            specialty: 'Kolor, akwarela, covery, blizny',
-            image: 'https://static.wixstatic.com/media/be828f_384a9c93395e4b8997fa962903b6cfd6~mv2.jpg',
-          },
-          {
-            id: 'olena',
-            name: 'Olena',
-            specialty: 'Subtelne i kobiece tatuaże',
-            image: 'https://static.wixstatic.com/media/be828f_bba99e895c8e493580e7cf11e0b1f26f~mv2.jpg',
-          },
-          {
-            id: 'kamil-talar',
-            name: 'Kamil Talar',
-            specialty: 'Graficzne, kolor, sketch, dotwork',
-            image: 'https://static.wixstatic.com/media/be828f_c5abab41d0964feeba241ec519b23580~mv2.jpg',
-          },
-          {
-            id: 'gabriela-golonka',
-            name: 'Gabriela Golonka',
-            specialty: 'Linearne, kolor, cover-up, blizny',
-            image: 'https://static.wixstatic.com/media/be828f_a0474707cb494a39b14fdffcfb8e24a5~mv2.jpg',
-          },
+          { id: 'marzena-bonar',   name: 'Marzena Bonar',   specialty: 'Kolor, akwarela, covery, blizny', image: 'https://static.wixstatic.com/media/be828f_384a9c93395e4b8997fa962903b6cfd6~mv2.jpg' },
+          { id: 'olena',            name: 'Olena',            specialty: 'Subtelne i kobiece tatuaże',      image: 'https://static.wixstatic.com/media/be828f_bba99e895c8e493580e7cf11e0b1f26f~mv2.jpg' },
+          { id: 'kamil-talar',      name: 'Kamil Talar',      specialty: 'Graficzne, kolor, sketch, dotwork', image: 'https://static.wixstatic.com/media/be828f_c5abab41d0964feeba241ec519b23580~mv2.jpg' },
+          { id: 'gabriela-golonka', name: 'Gabriela Golonka', specialty: 'Linearne, kolor, cover-up, blizny', image: 'https://static.wixstatic.com/media/be828f_a0474707cb494a39b14fdffcfb8e24a5~mv2.jpg' },
         ]}
       />
 

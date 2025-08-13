@@ -5,11 +5,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import 'slick-carousel/slick/slick.css';
 
-export interface PortfolioItem {
-  id: string | number;
-  image: string;
-  alt: string;
-}
+export interface PortfolioItem { id: string | number; image: string; alt: string; }
 
 interface PortfolioProps {
   portfolioItems: PortfolioItem[];
@@ -30,35 +26,26 @@ const Portfolio: React.FC<PortfolioProps> = ({
 }) => {
   const sliderRef = useRef<Slider | null>(null);
 
-  const settings: Settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow,
-    slidesToScroll: 1,
-    autoplay: false,
-    arrows: false,
-    responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: Math.min(2, slidesToShow) } },
-      { breakpoint: 640, settings: { slidesToShow: 1 } },
-    ],
+  const settings: Settings = { dots: false, infinite: true, speed: 500, slidesToShow, slidesToScroll: 1, autoplay: false, arrows: false,
+    responsive: [{ breakpoint: 1024, settings: { slidesToShow: Math.min(2, slidesToShow) } }, { breakpoint: 640, settings: { slidesToShow: 1 } }],
   };
 
   return (
-    <section className="py-20 bg-metallic">
+    <section className="section bg-metallic">
       <div className="container">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center stack"
         >
           <h2 className="mb-4">{title}</h2>
           <p className="max-w-2xl mx-auto text-gray-300">{description}</p>
         </motion.div>
 
         <div className="relative">
+          {/* slider bez zmian */}
           <Slider ref={sliderRef} {...settings} className="portfolio-slider">
             {portfolioItems.map((item) => (
               <div key={item.id} className="px-2">
@@ -70,12 +57,7 @@ const Portfolio: React.FC<PortfolioProps> = ({
                   className="relative overflow-hidden rounded-lg bg-graphite aspect-square"
                   whileHover={{ scale: 1.03 }}
                 >
-                  <img
-                    src={item.image}
-                    alt={item.alt}
-                    loading="lazy"
-                    className="w-full h-full object-cover"
-                  />
+                  <img src={item.image} alt={item.alt} loading="lazy" className="w-full h-full object-cover" />
                 </motion.div>
               </div>
             ))}
@@ -97,7 +79,7 @@ const Portfolio: React.FC<PortfolioProps> = ({
           </button>
         </div>
 
-        <div className="text-center mt-10">
+        <div className="text-center mt-6">
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Link to={viewAllHref} className="btn btn-secondary">
               {viewAllLabel}
