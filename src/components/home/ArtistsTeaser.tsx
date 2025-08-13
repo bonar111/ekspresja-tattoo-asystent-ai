@@ -50,10 +50,6 @@ const ArtistsTeaser = ({ artists }: Props) => {
             </motion.div>
           ))}
         </div>
-
-        <div className="text-center mt-6">
-          <Link to="/team" className="btn btn-secondary">Zobacz wszystkich</Link>
-        </div>
       </div>
     </section>
   );
