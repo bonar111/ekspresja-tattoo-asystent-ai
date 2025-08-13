@@ -10,6 +10,7 @@ import Testimonials from '../components/home/Testimonials';
 import Proof from '../components/home/Proof';
 import Process from '../components/home/Process';
 import FinalCTA from '../components/home/FinalCTA';
+import ArtistsTeaser from '../components/home/ArtistsTeaser';
 
 /** slider – zostaje, ale niżej na stronie */
 const homePortfolioItems: PortfolioItem[] = [
@@ -159,6 +160,29 @@ const HomePage = () => {
         title="Masz pomysł na tatuaż?"
         subtitle="Pokaż nam swoją starą pracę lub inspiracje — w kilka minut podpowiemy, co możemy wyczarować."
       />
+
+      <ArtistsTeaser
+  artists={[
+    {
+      id: 'marzena-bonar',
+      name: 'Marzena Bonar',
+      specialty: 'Kolor, akwarela, covery, blizny',
+      image: 'https://static.wixstatic.com/media/be828f_384a9c93395e4b8997fa962903b6cfd6~mv2.jpg',
+    },
+    {
+      id: 'kamil-talar',
+      name: 'Kamil Talar',
+      specialty: 'Graficzne, kolor, sketch, dotwork',
+      image: 'https://static.wixstatic.com/media/be828f_c5abab41d0964feeba241ec519b23580~mv2.jpg',
+    },
+    {
+      id: 'gabriela-golonka',
+      name: 'Gabriela Golonka',
+      specialty: 'Linearne, kolor, cover-up, blizny',
+      image: 'https://static.wixstatic.com/media/be828f_a0474707cb494a39b14fdffcfb8e24a5~mv2.jpg',
+    },
+  ]}
+/>
 
       {/* Reszta strony */}
       <Benefits />
