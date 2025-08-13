@@ -40,10 +40,10 @@ const ArtistsTeaser = ({ artists }: Props) => {
                 <p className="text-sm text-gray-300 mb-4">{a.specialty}</p>
                 <div className="flex gap-2">
                   <button onClick={() => handleChat(a.id)} className="btn btn-primary flex-1">
-                    Porozmawiaj
+                    Bezpłatna Konsultacja
                   </button>
                   <Link to={`/artist/${a.id}`} className="btn btn-secondary">
-                    Profil
+                    Portfolio
                   </Link>
                 </div>
               </div>

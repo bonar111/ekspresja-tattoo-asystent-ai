@@ -20,7 +20,7 @@ const Hero = () => {
           className="max-w-2xl mx-auto"
         >
           <h1 className="mb-4 text-4xl sm:text-5xl font-bold leading-tight">
-            Kolorowy, kobiecy tatuaż
+            Kolorowe, kobiece tatuaże
           </h1>
           <p className="text-lg sm:text-xl mb-8">
             Opowiedz nam o swoim pomyśle – Wycenimy Twój tautuaż w 2-3 minuty

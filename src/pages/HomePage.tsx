@@ -25,18 +25,21 @@ const homePortfolioItems: PortfolioItem[] = [
 
 /** Najlepsze prace */
 const BEST = [
-  'https://static.wixstatic.com/media/be828f_de7f8790908a4804beeaa0f54df61287~mv2.jpg',
+
+
+
   'https://static.wixstatic.com/media/be828f_6a5cc124459044b2b66a665ae3558d80~mv2.jpg',
-  'https://static.wixstatic.com/media/be828f_15a202fa39c74487a6ccf27f6fdca669~mv2.jpg',
-  'https://static.wixstatic.com/media/be828f_9bc1f8431e984cdeabaa3586659b7409~mv2.jpg',
   'https://static.wixstatic.com/media/be828f_51796d4a097847198f6814ffbeb4444e~mv2.jpg',
   'https://static.wixstatic.com/media/be828f_e6d9c76703b443a19119b94c60e4a615~mv2.jpg',
+    'https://static.wixstatic.com/media/be828f_15a202fa39c74487a6ccf27f6fdca669~mv2.jpg',
+  'https://static.wixstatic.com/media/be828f_9bc1f8431e984cdeabaa3586659b7409~mv2.jpg',
   'https://static.wixstatic.com/media/be828f_9af9de820ea34ea9970455d866d8df70~mv2.jpg',
   'https://static.wixstatic.com/media/be828f_f128de930382411b9db9b85df235be99~mv2.jpg',
   'https://static.wixstatic.com/media/be828f_e33a5d13473d439eb7b870e0aca38182~mv2.jpg',
-  'https://static.wixstatic.com/media/be828f_754e43094a084ebdb8363bb3c0945852~mv2.jpg',
   'https://static.wixstatic.com/media/be828f_1919781d36af4e23851a747d8eab2ba1~mv2.jpg',
   'https://static.wixstatic.com/media/be828f_0398826ba328441d975230f5298c28ac~mv2.jpg',
+  'https://static.wixstatic.com/media/be828f_bad0b956531a4981837f3f3fabac522e~mv2.jpg',
+  'https://static.wixstatic.com/media/be828f_169db3abad19402a80d8268660bbce44~mv2.jpg'
 ];
 
 /** Covery */
@@ -52,6 +55,9 @@ const COVERS = [
   'https://static.wixstatic.com/media/be828f_fa68fcb271bc4e569e6cb74f45c2c179~mv2.jpg',
   'https://static.wixstatic.com/media/be828f_e4166a9d6e4244f3a2855cd6c26b3de1~mv2.jpg',
   'https://static.wixstatic.com/media/be828f_9b1bab1b568a41e083c97e62ba9d3622~mv2.jpg',
+  'https://static.wixstatic.com/media/be828f_754e43094a084ebdb8363bb3c0945852~mv2.jpg',
+  'https://static.wixstatic.com/media/be828f_1557a30042744b928b1791ca2db0e0cb~mv2.jpg',
+  'https://static.wixstatic.com/media/be828f_41fa95d9d38f47129ce99891a501ed21~mv2.jpg'
 ];
 
 const Grid = ({ items }: { items: string[] }) => (
@@ -96,7 +102,7 @@ const InlineCTA = ({
 
 const HomePage = () => {
   useEffect(() => {
-    document.title = 'Ekspresja Tattoo Studio | Professional Tattoos with Heart and Art';
+    document.title = 'Ekspresja Tattoo Studio | Studio Tatuażu w Krakowie';
   }, []);
 
   return (
@@ -113,7 +119,7 @@ const HomePage = () => {
             transition={{ duration: 0.4 }}
             className="text-center mb-2"
           >
-            Kobiecy tatuaż. Zobacz swój projekt w 2 min
+            Zobacz nasze prace
           </motion.h2>
           <p className="text-center text-gray-300 mb-8">
             Bezpłatna wizualizacja + wstępna wycena na czacie, bez zobowiązań
