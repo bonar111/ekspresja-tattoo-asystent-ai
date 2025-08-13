@@ -135,6 +135,12 @@ const HomePage = () => {
             image: 'https://static.wixstatic.com/media/be828f_384a9c93395e4b8997fa962903b6cfd6~mv2.jpg',
           },
           {
+            id: 'olena',
+            name: 'Olena',
+            specialty: 'Subtelne i kobiece tatuaże',
+            image: 'https://static.wixstatic.com/media/be828f_bba99e895c8e493580e7cf11e0b1f26f~mv2.jpg',
+          },
+          {
             id: 'kamil-talar',
             name: 'Kamil Talar',
             specialty: 'Graficzne, kolor, sketch, dotwork',

@@ -25,7 +25,7 @@ const ArtistsTeaser = ({ artists }: Props) => {
         </motion.h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {artists.slice(0, 3).map((a, i) => (
+          {artists.map((a, i) => (
             <motion.div
               key={a.id}
               initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
