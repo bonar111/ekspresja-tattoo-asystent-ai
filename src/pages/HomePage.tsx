@@ -113,16 +113,12 @@ const HomePage = () => {
             transition={{ duration: 0.4 }}
             className="text-center mb-2"
           >
-            Najlepsze prace
+            Kobiecy tatuaż. Zobacz swój projekt w 2 min
           </motion.h2>
           <p className="text-center text-gray-300 mb-8">
-            Zobacz styl i jakość, które klienci kochają najbardziej.
+            Bezpłatna wizualizacja + wstępna wycena na czacie, bez zobowiązań
           </p>
           <Grid items={BEST} />
-
-          <div className="text-center mt-6">
-            <Link to="/team" className="btn btn-secondary">Zobacz artystów</Link>
-          </div>
         </div>
       </section>
 
@@ -148,10 +144,6 @@ const HomePage = () => {
             Zmieniamy stare prace w nowe dzieła — zobacz przykłady coverów.
           </p>
           <Grid items={COVERS} />
-
-          <div className="text-center mt-6">
-            <Link to="/team" className="btn btn-secondary">Zobacz artystów</Link>
-          </div>
         </div>
       </section>
 
