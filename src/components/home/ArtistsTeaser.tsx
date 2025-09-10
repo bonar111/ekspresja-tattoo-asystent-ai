@@ -1,15 +1,12 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { track } from '../../lib/analytics';
+import { openChat } from '../../lib/openChat';
 
 type Artist = { id: string; name: string; specialty: string; image: string };
 interface Props { artists: Artist[] }
 
 const ArtistsTeaser = ({ artists }: Props) => {
-  const handleChat = (id: string) => {
-    track('AIStart', { source: 'artists_teaser', artistId: id });
-    window.voiceflow?.chat?.open();
-  };
+  const handleChat = (id: string) => openChat({ source: 'artists_teaser', artistId: id });
 
   return (
     <section className="section-tight bg-graphite">

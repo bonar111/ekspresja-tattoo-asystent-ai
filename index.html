@@ -10,68 +10,30 @@
   <link rel="stylesheet" href="/src/index.css" />
 
   <!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1827552020965522');
-fbq('track', 'PageView');
-</script>
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1827552020965522');
+  fbq('track', 'PageView');
+  </script>
+  <!-- End Meta Pixel Code -->
 
-<!-- End Meta Pixel Code -->
-
-  <!-- Stylizacja tylko launchera Voiceflow -->
-  <style>
-    .vfrc-launcher {
-      background-color: #B900FF !important; /* Twój kolor marki */
-      width: 56px !important;
-      height: 56px !important;
-      border-radius: 50% !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
-    }
-
-    /* Nadpisanie fontu launchera */
-    .vfrc-widget *, .vfrc-launcher * {
-      font-family: inherit !important;
-    }
-  </style>
+  <style></style>
 </head>
 
 <body class="bg-graphite text-white font-body">
   <div id="root"></div>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1827552020965522&ev=PageView&noscript=1"
-/></noscript>
-  <!-- Twoje Reactowe aplikacje -->
-  <script type="module" src="/src/main.tsx"></script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1827552020965522&ev=PageView&noscript=1"
+  /></noscript>
 
-  <!-- Integracja Voiceflow -->
-  <script type="text/javascript">
-    (function(d, t) {
-      var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
-      v.onload = function() {
-        window.voiceflow.chat.load({
-          verify: { projectID: '67a994bb0ce33d8fbbf84452' },
-          url: 'https://general-runtime.voiceflow.com',
-          versionID: 'production',
-          voice: {
-            url: "https://runtime-api.voiceflow.com"
-          }
-        });
-      };
-      v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; 
-      v.type = "text/javascript"; 
-      v.async = true;
-      s.parentNode.insertBefore(v, s);
-    })(document, 'script');
-  </script>
+  <!-- Twoja aplikacja React -->
+  <script type="module" src="/src/main.tsx"></script>
 </body>
 </html>

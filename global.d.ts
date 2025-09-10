@@ -1,11 +1,8 @@
+// global.d.ts
 export {};
 
 declare global {
   interface Window {
-    voiceflow?: {
-      chat: {
-        open: () => void;
-      };
-    };
+    fbq?: (...args: any[]) => void;
   }
 }

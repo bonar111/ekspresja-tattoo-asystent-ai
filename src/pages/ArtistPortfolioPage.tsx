@@ -1,8 +1,8 @@
-// src/pages/ArtistPortfolioPage.tsx
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, MessageCircle } from 'lucide-react';
+import { openChat } from '../lib/openChat';
 
 interface ArtistData {
   name: string;
@@ -153,7 +153,6 @@ const ArtistPortfolioPage: React.FC = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
     if (id && artistsData[id]) {
       setArtist(artistsData[id]);
       document.title = `${artistsData[id].name} — ${artistsData[id].specialty}`;
@@ -224,7 +223,7 @@ const ArtistPortfolioPage: React.FC = () => {
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <button
                   className="btn btn-secondary inline-flex items-center"
-                  onClick={() => window.voiceflow?.chat.open()}
+                  onClick={() => openChat({ source: 'artist_page', artist: artist.name })}
                 >
                   <MessageCircle size={20} className="mr-2" />
                   Chat o projekcie
