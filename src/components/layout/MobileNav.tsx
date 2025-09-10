@@ -5,13 +5,13 @@ const MobileNav = () => {
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-graphite border-t border-metallic p-2 md:hidden z-40">
       <div className="flex justify-between items-center">
-        {/* Zamiast linku do /booking kierujemy do Messengera (deeplink) */}
+        {/* Link zostaje dla SEO / no-JS, ale na JS przejmujemy nawigację po wysłaniu eventu */}
         <a
           href={MESSENGER_URL}
           target="_blank"
           rel="noopener noreferrer"
           className="flex flex-col items-center px-4 py-2"
-          onClick={() => openChat({ source: 'mobile_nav_banner' })}
+          onClick={(e) => openChat({ source: 'mobile_nav_banner' }, e)}
         >
           <Calendar size={20} className="mb-1" />
           <span className="text-xs font-medium">
@@ -21,7 +21,7 @@ const MobileNav = () => {
 
         <button
           className="flex flex-col items-center px-4 py-2"
-          onClick={() => openChat({ source: 'mobile_nav_button' })}
+          onClick={(e) => openChat({ source: 'mobile_nav_button' }, e)}
         >
           <MessageCircle size={20} className="mb-1 animate-pulse-subtle" />
           <span className="text-xs font-medium flex items-center">

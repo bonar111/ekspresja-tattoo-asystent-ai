@@ -44,7 +44,10 @@ const FinalCTA = () => {
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <button className="btn btn-primary text-lg" onClick={openChat}>
+                <button
+                  className="btn btn-primary text-lg"
+                  onClick={(e) => openChat({ source: 'final_cta' }, e)}
+                >
                   Rozpocznij rozmowę
                 </button>
               </motion.div>

@@ -29,7 +29,7 @@ const Hero = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="btn btn-primary text-lg"
-            onClick={openChat}
+            onClick={(e) => openChat({ source: 'hero_cta' }, e)}
           >
             Rozpocznij konsultacje
           </motion.button>

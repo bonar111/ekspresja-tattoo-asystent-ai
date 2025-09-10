@@ -223,7 +223,7 @@ const ArtistPortfolioPage: React.FC = () => {
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <button
                   className="btn btn-secondary inline-flex items-center"
-                  onClick={() => openChat({ source: 'artist_page', artist: artist.name })}
+                  onClick={(e) => openChat({ source: 'artist_page', artist: artist.name }, e)}
                 >
                   <MessageCircle size={20} className="mr-2" />
                   Chat o projekcie

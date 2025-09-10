@@ -1,3 +1,4 @@
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { openChat } from '../../lib/openChat';
@@ -6,7 +7,8 @@ type Artist = { id: string; name: string; specialty: string; image: string };
 interface Props { artists: Artist[] }
 
 const ArtistsTeaser = ({ artists }: Props) => {
-  const handleChat = (id: string) => openChat({ source: 'artists_teaser', artistId: id });
+  const handleChat = (id: string, e: React.MouseEvent) =>
+    openChat({ source: 'artists_teaser', artistId: id }, e);
 
   return (
     <section className="section-tight bg-graphite">
@@ -34,7 +36,10 @@ const ArtistsTeaser = ({ artists }: Props) => {
                 <p className="font-semibold">{a.name}</p>
                 <p className="text-sm text-gray-300 mb-4">{a.specialty}</p>
                 <div className="flex gap-2">
-                  <button onClick={() => handleChat(a.id)} className="btn btn-primary flex-1">
+                  <button
+                    onClick={(e) => handleChat(a.id, e)}
+                    className="btn btn-primary flex-1"
+                  >
                     Bezpłatna Konsultacja
                   </button>
                   <Link to={`/artist/${a.id}`} className="btn btn-secondary">
