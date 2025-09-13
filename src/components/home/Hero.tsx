@@ -23,7 +23,7 @@ const Hero = () => {
             Kolorowe, kobiece tatuaże
           </h1>
           <p className="text-lg sm:text-xl mb-8">
-            Opowiedz nam o swoim pomyśle – Wycenimy Twój tautuaż w 2-3 minuty
+            Opowiedz nam o swoim pomyśle – Wycenimy Twój tatuaż w 2-3 minuty
           </p>
           <motion.button
             whileHover={{ scale: 1.05 }}
