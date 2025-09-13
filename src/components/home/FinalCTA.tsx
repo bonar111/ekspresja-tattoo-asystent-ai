@@ -48,7 +48,7 @@ const FinalCTA = () => {
                   className="btn btn-primary text-lg"
                   onClick={(e) => openChat({ source: 'final_cta' }, e)}
                 >
-                  Rozpocznij rozmowę
+                  Rozpocznij konsultację
                 </button>
               </motion.div>
             </motion.div>
