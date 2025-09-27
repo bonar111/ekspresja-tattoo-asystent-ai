@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import api from "../utils/axiosInstance"; // dostosuj ścieżkę jeśli potrzeba
+import api from "../utils/axiosInstance"; // ← dostosuj ścieżkę
 
 // ===== typy zgodne z backendem =====
 type PriceRange = { Min: number; Max: number; IsPerSession: boolean };
@@ -15,7 +15,7 @@ type QuoteResponse = {
   IsMultiSession: boolean; Artists: Artist[]; Examples: string[]; Message: string; CopyText: string; Ui: UiPayload;
 };
 
-// ===== helpers =====
+// ===== dane pomocnicze =====
 const SIZE_LABELS: Record<number, string> = {
   1: "ok. 1–5 cm",
   2: "ok. 6–10 cm",
@@ -54,6 +54,7 @@ const exceptionPiecesOptions: Record<string, { min: number; max: number; label: 
   beetles: { min: 1, max: 3, label: "Ile żuczków" },
   bees: { min: 1, max: 3, label: "Ile pszczółek" },
 };
+
 const money = (v: number) => `${Math.round(v)} zł`;
 const unify = (min?: number | null, max?: number | null, perSession?: boolean) => {
   if (typeof min === "number" && typeof max === "number") {
@@ -62,6 +63,7 @@ const unify = (min?: number | null, max?: number | null, perSession?: boolean) =
   }
   return null;
 };
+
 function buildDescription(exception: string, pieces: number): string {
   switch (exception) {
     case "lettering": return "napisy cytat tekst";
@@ -76,46 +78,17 @@ function buildDescription(exception: string, pieces: number): string {
   }
 }
 
-// ===== style (czytelność na białym tle) =====
-const DARK = "#111827";
-const SUBTLE = "#475569";
-const BG = "#ffffff";
-const BORDER = "#e5e7eb";
-const BORDER_SOFT = "#eef2f7";
-
-const field = {
-  label: { display: "block", fontWeight: 600, marginBottom: 6, color: DARK },
-  input: {
-    padding: "8px 10px",
-    borderRadius: 8,
-    border: `1px solid ${BORDER}`,
-    background: BG,
-    color: DARK,
-  } as React.CSSProperties,
-} as const;
-
-const card: React.CSSProperties = {
-  background: BG,
-  color: DARK,
-  border: `1px solid ${BORDER_SOFT}`,
-  borderRadius: 16,
-  padding: 20,
-  boxShadow: "0 1px 2px rgba(16,24,40,.05)",
-};
-
-const pill = { background: "#f3f4f6", padding: "4px 8px", borderRadius: 999, fontSize: 12, color: DARK };
-
 const QuotePage: React.FC = () => {
-  // form state
+  // ---- stan formularza
   const [isColour, setIsColour] = useState(true);
   const [selectedArtist, setSelectedArtist] = useState("");
   const [cover, setCover] = useState(false);
   const [scar, setScar] = useState(false);
-  const [size, setSize] = useState<number>(3); // ⬅️ jedno pole rozmiaru, domyślnie 11–15 cm
+  const [size, setSize] = useState<number>(3); // jeden rozmiar – domyślnie 11–15 cm
   const [exception, setException] = useState("none");
   const [exceptionPieces, setExceptionPieces] = useState(1);
 
-  // ui state
+  // ---- stan UI
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<QuoteResponse | null>(null);
@@ -127,7 +100,7 @@ const QuotePage: React.FC = () => {
     setLoading(true); setError(null); setData(null);
     try {
       const body = {
-        sizes: [size], // ⬅️ wysyłamy listę z jednym rozmiarem
+        sizes: [size],
         isColour,
         userTattooDescription: buildDescription(exception, exceptionPieces),
         selectedArtist: selectedArtist || null,
@@ -154,34 +127,27 @@ const QuotePage: React.FC = () => {
   }
 
   return (
-    <div style={{ maxWidth: 1200, margin: "0 auto", padding: 24 }}>
-      <h1 style={{ fontSize: 24, fontWeight: 700, marginBottom: 6, color: "#e5e7eb" }}>Wycena tatuażu</h1>
-      <p style={{ color: "#94a3b8", marginBottom: 24 }}>Wybierz parametry, a następnie kliknij „Oblicz wycenę”.</p>
+    <div className="max-w-6xl mx-auto px-4 py-6">
+      <h1 className="text-2xl font-semibold mb-1 text-slate-200">Wycena tatuażu</h1>
+      <p className="text-slate-400 mb-5">Wybierz parametry, a następnie kliknij „Oblicz wycenę”.</p>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: 24 }}>
+      {/* MOBILE-FIRST: kolumna, od md siatka 1:2 */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
         {/* FORM */}
-        <div style={card}>
+        <div className="bg-white text-gray-900 rounded-2xl border border-slate-100 shadow p-4 md:p-5">
           {/* Kolor / Czerń */}
-          <div style={{ marginBottom: 16 }}>
-            <span style={field.label}>Kolorystyka</span>
-            <div style={{ display: "flex", gap: 8 }}>
+          <div className="mb-4">
+            <div className="font-semibold mb-2">Kolorystyka</div>
+            <div className="flex gap-2">
               <button
                 onClick={() => setIsColour(true)}
-                style={{
-                  padding: "8px 12px", borderRadius: 10,
-                  border: `1px solid ${isColour ? DARK : BORDER}`, background: isColour ? DARK : BG,
-                  color: isColour ? "#fff" : DARK, cursor: "pointer",
-                }}
+                className={`px-3 py-2 rounded-lg border ${isColour ? "bg-gray-900 text-white border-gray-900" : "bg-white text-gray-900 border-gray-300"}`}
               >
                 Kolor
               </button>
               <button
                 onClick={() => setIsColour(false)}
-                style={{
-                  padding: "8px 12px", borderRadius: 10,
-                  border: `1px solid ${!isColour ? DARK : BORDER}`, background: !isColour ? DARK : BG,
-                  color: !isColour ? "#fff" : DARK, cursor: "pointer",
-                }}
+                className={`px-3 py-2 rounded-lg border ${!isColour ? "bg-gray-900 text-white border-gray-900" : "bg-white text-gray-900 border-gray-300"}`}
               >
                 Czerń
               </button>
@@ -189,32 +155,33 @@ const QuotePage: React.FC = () => {
           </div>
 
           {/* Motyw */}
-          <div style={{ marginBottom: 16 }}>
-            <label style={field.label}>Motyw (opcjonalnie)</label>
+          <div className="mb-4">
+            <label className="block font-semibold mb-2">Motyw (opcjonalnie)</label>
             <select
               value={exception}
               onChange={(e) => setException(e.target.value)}
-              style={{ ...field.input, width: "100%", cursor: "pointer" }}
+              className="w-full rounded-lg border border-gray-300 bg-white text-gray-900 px-3 py-2"
             >
               {EXCEPTIONS.map((x) => (
-                <option key={x.value} value={x.value} style={{ color: DARK }}>
+                <option key={x.value} value={x.value} className="text-gray-900">
                   {x.label}
                 </option>
               ))}
             </select>
+
             {canPickPieces && (
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 8 }}>
-                <span style={{ color: SUBTLE, fontSize: 14 }}>{exceptionPiecesOptions[exception].label}</span>
+              <div className="flex items-center gap-3 mt-2">
+                <span className="text-sm text-slate-600">{exceptionPiecesOptions[exception].label}</span>
                 <select
                   value={exceptionPieces}
                   onChange={(e) => setExceptionPieces(parseInt(e.target.value))}
-                  style={{ ...field.input, cursor: "pointer" }}
+                  className="rounded-lg border border-gray-300 bg-white text-gray-900 px-3 py-2"
                 >
                   {Array.from(
                     { length: exceptionPiecesOptions[exception].max },
                     (_, i) => i + exceptionPiecesOptions[exception].min
                   ).map((n) => (
-                    <option key={n} value={n} style={{ color: DARK }}>
+                    <option key={n} value={n} className="text-gray-900">
                       {n}
                     </option>
                   ))}
@@ -223,16 +190,16 @@ const QuotePage: React.FC = () => {
             )}
           </div>
 
-          {/* Rozmiar (pojedynczy) */}
-          <div style={{ marginBottom: 16 }}>
-            <label style={field.label}>Rozmiar</label>
+          {/* Rozmiar pojedynczy */}
+          <div className="mb-4">
+            <label className="block font-semibold mb-2">Rozmiar</label>
             <select
               value={size}
               onChange={(e) => setSize(parseInt(e.target.value))}
-              style={{ ...field.input, width: "100%", cursor: "pointer" }}
+              className="w-full rounded-lg border border-gray-300 bg-white text-gray-900 px-3 py-2"
             >
-              {[1,2,3,4,5,6,7].map((s) => (
-                <option key={s} value={s} style={{ color: DARK }}>
+              {[1, 2, 3, 4, 5, 6, 7].map((s) => (
+                <option key={s} value={s} className="text-gray-900">
                   {SIZE_LABELS[s]}
                 </option>
               ))}
@@ -240,30 +207,40 @@ const QuotePage: React.FC = () => {
           </div>
 
           {/* Dodatkowo */}
-          <div style={{ marginBottom: 16 }}>
-            <label style={field.label}>Dodatkowo</label>
-            <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
-              <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", color: DARK }}>
-                <input type="checkbox" checked={cover} onChange={(e) => setCover(e.target.checked)} />
+          <div className="mb-4">
+            <div className="font-semibold mb-2">Dodatkowo</div>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <label className="inline-flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  className="h-4 w-4 rounded border-gray-300"
+                  checked={cover}
+                  onChange={(e) => setCover(e.target.checked)}
+                />
                 <span>Cover starego tatuażu</span>
               </label>
-              <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", color: DARK }}>
-                <input type="checkbox" checked={scar} onChange={(e) => setScar(e.target.checked)} />
+              <label className="inline-flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  className="h-4 w-4 rounded border-gray-300"
+                  checked={scar}
+                  onChange={(e) => setScar(e.target.checked)}
+                />
                 <span>Tatuaż na bliźnie</span>
               </label>
             </div>
           </div>
 
           {/* Artysta */}
-          <div style={{ marginBottom: 16 }}>
-            <label style={field.label}>Tatuator</label>
+          <div className="mb-5">
+            <label className="block font-semibold mb-2">Tatuator</label>
             <select
               value={selectedArtist}
               onChange={(e) => setSelectedArtist(e.target.value)}
-              style={{ ...field.input, width: "100%", cursor: "pointer" }}
+              className="w-full rounded-lg border border-gray-300 bg-white text-gray-900 px-3 py-2"
             >
               {ARTISTS.map((a) => (
-                <option key={a.value || "all"} value={a.value} style={{ color: DARK }}>
+                <option key={a.value || "all"} value={a.value} className="text-gray-900">
                   {a.label}
                 </option>
               ))}
@@ -273,59 +250,87 @@ const QuotePage: React.FC = () => {
           <button
             onClick={requestQuote}
             disabled={loading}
-            style={{
-              padding: "10px 14px",
-              borderRadius: 10,
-              background: loading ? "#9ca3af" : DARK,
-              color: "#fff",
-              border: 0,
-              cursor: loading ? "not-allowed" : "pointer",
-            }}
+            className={`w-full md:w-auto px-4 py-2 rounded-lg text-white ${loading ? "bg-gray-400" : "bg-gray-900 hover:bg-gray-800"}`}
           >
             {loading ? "Liczenie…" : "Oblicz wycenę"}
           </button>
-          {error && <div style={{ color: "#dc2626", marginTop: 8, fontSize: 14 }}>{error}</div>}
+          {error && <div className="text-red-600 text-sm mt-2">{error}</div>}
         </div>
 
         {/* RESULT */}
-        <div style={card}>
-          {!data && !loading && <div style={{ color: "#6b7280" }}>Wynik pojawi się tutaj po kliknięciu „Oblicz wycenę”.</div>}
+        <div className="bg-white text-gray-900 rounded-2xl border border-slate-100 shadow p-4 md:p-5 md:col-span-2">
+          {!data && !loading && (
+            <div className="text-slate-500">Wynik pojawi się tutaj po kliknięciu „Oblicz wycenę”.</div>
+          )}
 
           {loading && (
-            <div>
-              <div style={{ height: 24, background: "#f3f4f6", borderRadius: 8, marginBottom: 8 }} />
-              <div style={{ height: 16, background: "#f3f4f6", borderRadius: 8, width: "50%", marginBottom: 16 }} />
-              <div style={{ height: 120, background: "#f3f4f6", borderRadius: 8 }} />
+            <div className="animate-pulse space-y-3">
+              <div className="h-6 bg-slate-100 rounded" />
+              <div className="h-4 bg-slate-100 rounded w-1/2" />
+              <div className="h-24 bg-slate-100 rounded" />
             </div>
           )}
 
           {data && (
-            <div>
-              <div style={{ display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 16 }}>
+            <div className="space-y-4">
+              {/* Nagłówek */}
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
                 <div>
-                  <h2 style={{ fontSize: 20, fontWeight: 700 }}>
+                  <h2 className="text-lg font-semibold">
                     {data.Ui?.Title || (data.IsColour ? "Orientacyjna wycena w kolorze" : "Orientacyjna wycena w czerni")}
                   </h2>
-                  <div style={{ color: SUBTLE, fontSize: 14 }}>
+                  <p className="text-sm text-slate-600">
                     {data.Ui?.Subtitle || (data.SizeCmText?.length ? `Tatuaż ${data.SizeCmText.join(", ")}` : "")}
                     {data.Ui?.Motif ? ` • Motyw: ${data.Ui.Motif}` : ""}
-                  </div>
+                  </p>
                 </div>
-                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                  <span style={pill}>{data.IsColour ? "Kolor" : "Czerń"}</span>
-                  {data.IsMultiSession && <span style={pill}>/ sesja</span>}
-                  {data.AppliedUplift?.Cover && <span style={pill}>Cover</span>}
-                  {data.AppliedUplift?.Scar && <span style={pill}>Blizna</span>}
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-2 py-1 rounded-full text-xs bg-slate-100">{data.IsColour ? "Kolor" : "Czerń"}</span>
+                  {data.IsMultiSession && <span className="px-2 py-1 rounded-full text-xs bg-slate-100">/ sesja</span>}
+                  {data.AppliedUplift?.Cover && <span className="px-2 py-1 rounded-full text-xs bg-slate-100">Cover</span>}
+                  {data.AppliedUplift?.Scar && <span className="px-2 py-1 rounded-full text-xs bg-slate-100">Blizna</span>}
                 </div>
               </div>
 
-              <div style={{ overflowX: "auto", border: `1px solid ${BORDER_SOFT}`, borderRadius: 12 }}>
-                <table style={{ width: "100%", fontSize: 14 }}>
-                  <thead style={{ background: "#f8fafc", color: SUBTLE }}>
+              {/* Widok mobilny: lista kart */}
+              <div className="space-y-3 md:hidden">
+                {data.Ui?.Rows?.map((row, idx) => {
+                  const final = unify(row.Min, row.Max, row.PerSession) ?? row.DisplayPrice;
+                  const link = data.Artists.find((a) => a.Artist === row.Artist)?.PortfolioLinks?.[0];
+                  return (
+                    <div key={idx} className="border border-slate-100 rounded-xl p-3">
+                      <div className="flex items-center justify-between">
+                        <div className="font-medium">{row.Artist}</div>
+                        <div className="text-right">
+                          {row.Note ? (
+                            <i className="text-slate-600">{row.Note}</i>
+                          ) : (
+                            <span className="font-semibold">{final}</span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="mt-2">
+                        {link ? (
+                          <a href={link} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm">
+                            Portfolio
+                          </a>
+                        ) : (
+                          <span className="text-slate-400 text-sm">—</span>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Widok desktop: tabela */}
+              <div className="hidden md:block overflow-x-auto border border-slate-100 rounded-xl">
+                <table className="w-full text-sm">
+                  <thead className="bg-slate-50 text-slate-600">
                     <tr>
-                      <th style={{ textAlign: "left", padding: 12, fontWeight: 600 }}>Tatuator</th>
-                      <th style={{ textAlign: "left", padding: 12, fontWeight: 600 }}>Wycena</th>
-                      <th style={{ textAlign: "left", padding: 12, fontWeight: 600 }}>Link</th>
+                      <th className="text-left p-3 font-medium">Tatuator</th>
+                      <th className="text-left p-3 font-medium">Wycena</th>
+                      <th className="text-left p-3 font-medium">Link</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -333,14 +338,18 @@ const QuotePage: React.FC = () => {
                       const final = unify(row.Min, row.Max, row.PerSession) ?? row.DisplayPrice;
                       const link = data.Artists.find((a) => a.Artist === row.Artist)?.PortfolioLinks?.[0];
                       return (
-                        <tr key={idx} style={{ borderTop: `1px solid ${BORDER_SOFT}` }}>
-                          <td style={{ padding: 12 }}>{row.Artist}</td>
-                          <td style={{ padding: 12 }}>{row.Note ? <i style={{ color: "#6b7280" }}>{row.Note}</i> : <b>{final}</b>}</td>
-                          <td style={{ padding: 12 }}>
+                        <tr key={idx} className="border-t border-slate-100">
+                          <td className="p-3">{row.Artist}</td>
+                          <td className="p-3">
+                            {row.Note ? <i className="text-slate-600">{row.Note}</i> : <b>{final}</b>}
+                          </td>
+                          <td className="p-3">
                             {link ? (
-                              <a href={link} target="_blank" rel="noreferrer" style={{ color: "#2563eb" }}>Portfolio</a>
+                              <a href={link} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline">
+                                Portfolio
+                              </a>
                             ) : (
-                              <span style={{ color: "#9ca3af" }}>—</span>
+                              <span className="text-slate-400">—</span>
                             )}
                           </td>
                         </tr>
@@ -351,16 +360,16 @@ const QuotePage: React.FC = () => {
               </div>
 
               {/* CTA Kopiuj */}
-              <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 16 }}>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 pt-1">
                 <button
                   onClick={copyToClipboard}
-                  style={{ padding: "10px 14px", border: `1px solid ${BORDER}`, borderRadius: 10, background: "#fff", color: DARK, cursor: "pointer" }}
+                  className="px-4 py-2 rounded-lg border border-gray-300 bg-white hover:bg-slate-50 w-full sm:w-auto"
                 >
                   {copied ? "Skopiowano!" : "Kopiuj tekst do Messengera"}
                 </button>
-                <details>
-                  <summary style={{ color: "#6b7280", cursor: "pointer" }}>Podgląd tekstu</summary>
-                  <pre style={{ whiteSpace: "pre-wrap", background: "#f8fafc", padding: 12, borderRadius: 8, marginTop: 8 }}>
+                <details className="w-full sm:w-auto">
+                  <summary className="text-sm text-slate-600 cursor-pointer">Podgląd tekstu</summary>
+                  <pre className="whitespace-pre-wrap text-sm p-3 bg-slate-50 rounded-lg mt-2">
                     {data.CopyText || data.Message}
                   </pre>
                 </details>
