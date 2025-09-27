@@ -1,5 +1,6 @@
+// src/pages/QuotePage.tsx
 import React, { useState } from "react";
-import api from "../utils/axiosInstance"; // ← dostosuj ścieżkę
+import api from "../utils/axiosInstance";
 
 // ===== typy zgodne z backendem =====
 type PriceRange = { Min: number; Max: number; IsPerSession: boolean };
@@ -15,16 +16,18 @@ type QuoteResponse = {
   IsMultiSession: boolean; Artists: Artist[]; Examples: string[]; Message: string; CopyText: string; Ui: UiPayload;
 };
 
-// ===== dane pomocnicze =====
+// ===== etykiety rozmiarów — ZAKTUALIZOWANE =====
 const SIZE_LABELS: Record<number, string> = {
-  1: "ok. 1–5 cm",
-  2: "ok. 6–10 cm",
-  3: "ok. 11–15 cm",
-  4: "ok. 16–18 cm",
-  5: "ok. 19–25 cm",
-  6: "ok. 26–40 cm",
-  7: "powyżej 40 cm",
+  1: "ok. 1–4 cm",
+  2: "ok. 5–7 cm",
+  3: "ok. 8–12 cm",
+  4: "ok. 13–15 cm",
+  5: "ok. 16–18 cm",
+  6: "ok. 19–25 cm",
+  7: "ok. 26–40 cm",
+  8: "powyżej 40 cm",
 };
+
 const ARTISTS = [
   { label: "Wszyscy", value: "" },
   { label: "Marzena Bonar", value: "Marzena Bonar" },
@@ -32,6 +35,7 @@ const ARTISTS = [
   { label: "Kamil Talar", value: "Kamil Talar" },
   { label: "Zyta Nyznar", value: "Zyta Nyznar" },
 ];
+
 const EXCEPTIONS = [
   { label: "Brak (standard)", value: "none" },
   { label: "Napisy", value: "lettering" },
@@ -43,6 +47,7 @@ const EXCEPTIONS = [
   { label: "Żuczki 3D", value: "beetles" },
   { label: "Pszczółki 3D", value: "bees" },
 ];
+
 const exceptionPiecesOptions: Record<string, { min: number; max: number; label: string }> = {
   none: { min: 0, max: 0, label: "" },
   lettering: { min: 0, max: 0, label: "" },
@@ -79,16 +84,16 @@ function buildDescription(exception: string, pieces: number): string {
 }
 
 const QuotePage: React.FC = () => {
-  // ---- stan formularza
+  // ---- formularz
   const [isColour, setIsColour] = useState(true);
   const [selectedArtist, setSelectedArtist] = useState("");
   const [cover, setCover] = useState(false);
   const [scar, setScar] = useState(false);
-  const [size, setSize] = useState<number>(3); // jeden rozmiar – domyślnie 11–15 cm
+  const [size, setSize] = useState<number>(3); // domyślnie 8–12 cm
   const [exception, setException] = useState("none");
   const [exceptionPieces, setExceptionPieces] = useState(1);
 
-  // ---- stan UI
+  // ---- UI
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<QuoteResponse | null>(null);
@@ -100,7 +105,7 @@ const QuotePage: React.FC = () => {
     setLoading(true); setError(null); setData(null);
     try {
       const body = {
-        sizes: [size],
+        sizes: [size],                              // nowa siatka 1..8
         isColour,
         userTattooDescription: buildDescription(exception, exceptionPieces),
         selectedArtist: selectedArtist || null,
@@ -131,7 +136,7 @@ const QuotePage: React.FC = () => {
       <h1 className="text-2xl font-semibold mb-1 text-slate-200">Wycena tatuażu</h1>
       <p className="text-slate-400 mb-5">Wybierz parametry, a następnie kliknij „Oblicz wycenę”.</p>
 
-      {/* MOBILE-FIRST: kolumna, od md siatka 1:2 */}
+      {/* mobile-first: 1 kol., od md siatka 1:2 */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
         {/* FORM */}
         <div className="bg-white text-gray-900 rounded-2xl border border-slate-100 shadow p-4 md:p-5">
@@ -190,7 +195,7 @@ const QuotePage: React.FC = () => {
             )}
           </div>
 
-          {/* Rozmiar pojedynczy */}
+          {/* Rozmiar (1..8) */}
           <div className="mb-4">
             <label className="block font-semibold mb-2">Rozmiar</label>
             <select
@@ -198,7 +203,7 @@ const QuotePage: React.FC = () => {
               onChange={(e) => setSize(parseInt(e.target.value))}
               className="w-full rounded-lg border border-gray-300 bg-white text-gray-900 px-3 py-2"
             >
-              {[1, 2, 3, 4, 5, 6, 7].map((s) => (
+              {[1,2,3,4,5,6,7,8].map((s) => (
                 <option key={s} value={s} className="text-gray-900">
                   {SIZE_LABELS[s]}
                 </option>
@@ -292,9 +297,9 @@ const QuotePage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Widok mobilny: lista kart */}
+              {/* Mobile: karty */}
               <div className="space-y-3 md:hidden">
-                {data.Ui?.Rows?.map((row, idx) => {
+                {(data.Ui?.Rows ?? []).filter(r => !r.Note).map((row, idx) => {
                   const final = unify(row.Min, row.Max, row.PerSession) ?? row.DisplayPrice;
                   const link = data.Artists.find((a) => a.Artist === row.Artist)?.PortfolioLinks?.[0];
                   return (
@@ -302,11 +307,7 @@ const QuotePage: React.FC = () => {
                       <div className="flex items-center justify-between">
                         <div className="font-medium">{row.Artist}</div>
                         <div className="text-right">
-                          {row.Note ? (
-                            <i className="text-slate-600">{row.Note}</i>
-                          ) : (
-                            <span className="font-semibold">{final}</span>
-                          )}
+                          <span className="font-semibold">{final}</span>
                         </div>
                       </div>
                       <div className="mt-2">
@@ -323,7 +324,7 @@ const QuotePage: React.FC = () => {
                 })}
               </div>
 
-              {/* Widok desktop: tabela */}
+              {/* Desktop: tabela */}
               <div className="hidden md:block overflow-x-auto border border-slate-100 rounded-xl">
                 <table className="w-full text-sm">
                   <thead className="bg-slate-50 text-slate-600">
@@ -334,15 +335,13 @@ const QuotePage: React.FC = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {data.Ui?.Rows?.map((row, idx) => {
+                    {(data.Ui?.Rows ?? []).filter(r => !r.Note).map((row, idx) => {
                       const final = unify(row.Min, row.Max, row.PerSession) ?? row.DisplayPrice;
                       const link = data.Artists.find((a) => a.Artist === row.Artist)?.PortfolioLinks?.[0];
                       return (
                         <tr key={idx} className="border-t border-slate-100">
                           <td className="p-3">{row.Artist}</td>
-                          <td className="p-3">
-                            {row.Note ? <i className="text-slate-600">{row.Note}</i> : <b>{final}</b>}
-                          </td>
+                          <td className="p-3"><b>{final}</b></td>
                           <td className="p-3">
                             {link ? (
                               <a href={link} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline">
