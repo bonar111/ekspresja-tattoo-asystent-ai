@@ -98,7 +98,7 @@ const QuotePage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<QuoteResponse | null>(null);
   const [copied, setCopied] = useState(false);
-  const resultRef = useRef<HTMLDivElement>(null); // ⬅️ do przewinięcia
+  const resultRef = useRef<HTMLDivElement>(null); // do przewinięcia
 
   const canPickPieces = exceptionPiecesOptions[exception]?.max > 0;
 
@@ -107,7 +107,7 @@ const QuotePage: React.FC = () => {
     setError(null);
     setData(null);
 
-    // ⬇️ przewiń do sekcji wyników od razu (zobaczysz skeleton)
+    // przewiń do sekcji wyników (działa dzięki scroll-margin-top)
     resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
 
     try {
@@ -270,7 +270,12 @@ const QuotePage: React.FC = () => {
         </div>
 
         {/* RESULT */}
-        <div ref={resultRef} className="bg-white text-gray-900 rounded-2xl border border-slate-100 shadow p-4 md:p-5 md:col-span-2">
+        <div
+          id="quote-result"
+          ref={resultRef}
+          style={{ scrollMarginTop: "var(--header-h, 72px)" }}
+          className="bg-white text-gray-900 rounded-2xl border border-slate-100 shadow p-4 md:p-5 md:col-span-2"
+        >
           {!data && !loading && (
             <div className="text-slate-500">Wynik pojawi się tutaj po kliknięciu „Oblicz wycenę”.</div>
           )}

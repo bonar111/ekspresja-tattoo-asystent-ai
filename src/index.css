@@ -6,6 +6,10 @@
 /* ==================== *
  *   Warstwa globalna   *
  * ==================== */
+
+ /* Fallback wysokości nagłówka – nadpisze ją Navbar w runtime */
+:root { --header-h: 72px; }
+
 @layer base {
   html { scroll-behavior: smooth; }
   body { @apply bg-graphite text-white font-body; }
