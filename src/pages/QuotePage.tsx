@@ -409,6 +409,7 @@ const QuotePage: React.FC = () => {
       </div>
     </div>
   );
+  
 };
 
 export default QuotePage;
