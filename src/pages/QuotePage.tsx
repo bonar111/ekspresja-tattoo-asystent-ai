@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from "react";
-import api from "../utils/axiosInstance"; // dostosuj ścieżkę jeśli trzeba
+import React, { useState } from "react";
+import api from "../utils/axiosInstance"; // dostosuj ścieżkę jeśli potrzeba
 
 // ===== typy zgodne z backendem =====
 type PriceRange = { Min: number; Max: number; IsPerSession: boolean };
@@ -17,7 +17,13 @@ type QuoteResponse = {
 
 // ===== helpers =====
 const SIZE_LABELS: Record<number, string> = {
-  1: "ok. 1–5 cm", 2: "ok. 6–10 cm", 3: "ok. 11–15 cm", 4: "ok. 16–18 cm", 5: "ok. 19–25 cm", 6: "ok. 26–40 cm", 7: "powyżej 40 cm",
+  1: "ok. 1–5 cm",
+  2: "ok. 6–10 cm",
+  3: "ok. 11–15 cm",
+  4: "ok. 16–18 cm",
+  5: "ok. 19–25 cm",
+  6: "ok. 26–40 cm",
+  7: "powyżej 40 cm",
 };
 const ARTISTS = [
   { label: "Wszyscy", value: "" },
@@ -70,7 +76,7 @@ function buildDescription(exception: string, pieces: number): string {
   }
 }
 
-// ===== kolory, style (wymuszamy czytelność na białym tle) =====
+// ===== style (czytelność na białym tle) =====
 const DARK = "#111827";
 const SUBTLE = "#475569";
 const BG = "#ffffff";
@@ -90,7 +96,7 @@ const field = {
 
 const card: React.CSSProperties = {
   background: BG,
-  color: DARK,                 // ⬅️ kluczowe
+  color: DARK,
   border: `1px solid ${BORDER_SOFT}`,
   borderRadius: 16,
   padding: 20,
@@ -100,30 +106,20 @@ const card: React.CSSProperties = {
 const pill = { background: "#f3f4f6", padding: "4px 8px", borderRadius: 999, fontSize: 12, color: DARK };
 
 const QuotePage: React.FC = () => {
-  // form
+  // form state
   const [isColour, setIsColour] = useState(true);
   const [selectedArtist, setSelectedArtist] = useState("");
   const [cover, setCover] = useState(false);
   const [scar, setScar] = useState(false);
-  const [size1Count, setSize1Count] = useState<number>(0);
-  const [otherSizes, setOtherSizes] = useState<number[]>([3]);
+  const [size, setSize] = useState<number>(3); // ⬅️ jedno pole rozmiaru, domyślnie 11–15 cm
   const [exception, setException] = useState("none");
   const [exceptionPieces, setExceptionPieces] = useState(1);
 
-  // state
+  // ui state
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<QuoteResponse | null>(null);
   const [copied, setCopied] = useState(false);
-
-  // sizes → API
-  const sizesForApi = useMemo(() => {
-    const arr: number[] = [];
-    for (let i = 0; i < size1Count; i++) arr.push(1);
-    otherSizes.forEach((s) => arr.push(s));
-    if (arr.length === 0) arr.push(1);
-    return arr;
-  }, [size1Count, otherSizes]);
 
   const canPickPieces = exceptionPiecesOptions[exception]?.max > 0;
 
@@ -131,7 +127,7 @@ const QuotePage: React.FC = () => {
     setLoading(true); setError(null); setData(null);
     try {
       const body = {
-        sizes: sizesForApi,
+        sizes: [size], // ⬅️ wysyłamy listę z jednym rozmiarem
         isColour,
         userTattooDescription: buildDescription(exception, exceptionPieces),
         selectedArtist: selectedArtist || null,
@@ -172,12 +168,9 @@ const QuotePage: React.FC = () => {
               <button
                 onClick={() => setIsColour(true)}
                 style={{
-                  padding: "8px 12px",
-                  borderRadius: 10,
-                  border: `1px solid ${isColour ? DARK : BORDER}`,
-                  background: isColour ? DARK : BG,
-                  color: isColour ? "#fff" : DARK,
-                  cursor: "pointer",
+                  padding: "8px 12px", borderRadius: 10,
+                  border: `1px solid ${isColour ? DARK : BORDER}`, background: isColour ? DARK : BG,
+                  color: isColour ? "#fff" : DARK, cursor: "pointer",
                 }}
               >
                 Kolor
@@ -185,12 +178,9 @@ const QuotePage: React.FC = () => {
               <button
                 onClick={() => setIsColour(false)}
                 style={{
-                  padding: "8px 12px",
-                  borderRadius: 10,
-                  border: `1px solid ${!isColour ? DARK : BORDER}`,
-                  background: !isColour ? DARK : BG,
-                  color: !isColour ? "#fff" : DARK,
-                  cursor: "pointer",
+                  padding: "8px 12px", borderRadius: 10,
+                  border: `1px solid ${!isColour ? DARK : BORDER}`, background: !isColour ? DARK : BG,
+                  color: !isColour ? "#fff" : DARK, cursor: "pointer",
                 }}
               >
                 Czerń
@@ -233,48 +223,33 @@ const QuotePage: React.FC = () => {
             )}
           </div>
 
-          {/* Rozmiary */}
+          {/* Rozmiar (pojedynczy) */}
           <div style={{ marginBottom: 16 }}>
-            <label style={field.label}>Rozmiary</label>
-            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
-              <span style={{ color: SUBTLE, fontSize: 14, minWidth: 140 }}>Mikro (1–5 cm):</span>
-              <select
-                value={size1Count}
-                onChange={(e) => setSize1Count(parseInt(e.target.value))}
-                style={{ ...field.input, cursor: "pointer" }}
-              >
-                {Array.from({ length: 10 }, (_, i) => i).map((n) => (
-                  <option key={n} value={n} style={{ color: DARK }}>
-                    {n} szt.
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div style={{ display: "grid", gap: 8 }}>
-              {[2, 3, 4, 5, 6, 7].map((s) => (
-                <label key={s} style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", color: DARK }}>
-                  <input
-                    type="checkbox"
-                    checked={otherSizes.includes(s)}
-                    onChange={(e) => setOtherSizes((prev) => (e.target.checked ? [...prev, s] : prev.filter((x) => x !== s)))}
-                  />
-                  <span style={{ color: DARK }}>{SIZE_LABELS[s]}</span>
-                </label>
+            <label style={field.label}>Rozmiar</label>
+            <select
+              value={size}
+              onChange={(e) => setSize(parseInt(e.target.value))}
+              style={{ ...field.input, width: "100%", cursor: "pointer" }}
+            >
+              {[1,2,3,4,5,6,7].map((s) => (
+                <option key={s} value={s} style={{ color: DARK }}>
+                  {SIZE_LABELS[s]}
+                </option>
               ))}
-            </div>
+            </select>
           </div>
 
-          {/* Dodatkowe */}
+          {/* Dodatkowo */}
           <div style={{ marginBottom: 16 }}>
             <label style={field.label}>Dodatkowo</label>
             <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
               <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", color: DARK }}>
                 <input type="checkbox" checked={cover} onChange={(e) => setCover(e.target.checked)} />
-                <span style={{ color: DARK }}>Cover starego tatuażu</span>
+                <span>Cover starego tatuażu</span>
               </label>
               <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", color: DARK }}>
                 <input type="checkbox" checked={scar} onChange={(e) => setScar(e.target.checked)} />
-                <span style={{ color: DARK }}>Tatuaż na bliźnie</span>
+                <span>Tatuaż na bliźnie</span>
               </label>
             </div>
           </div>
@@ -328,7 +303,9 @@ const QuotePage: React.FC = () => {
             <div>
               <div style={{ display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 16 }}>
                 <div>
-                  <h2 style={{ fontSize: 20, fontWeight: 700 }}>{data.Ui?.Title || (data.IsColour ? "Orientacyjna wycena w kolorze" : "Orientacyjna wycena w czerni")}</h2>
+                  <h2 style={{ fontSize: 20, fontWeight: 700 }}>
+                    {data.Ui?.Title || (data.IsColour ? "Orientacyjna wycena w kolorze" : "Orientacyjna wycena w czerni")}
+                  </h2>
                   <div style={{ color: SUBTLE, fontSize: 14 }}>
                     {data.Ui?.Subtitle || (data.SizeCmText?.length ? `Tatuaż ${data.SizeCmText.join(", ")}` : "")}
                     {data.Ui?.Motif ? ` • Motyw: ${data.Ui.Motif}` : ""}
@@ -373,27 +350,12 @@ const QuotePage: React.FC = () => {
                 </table>
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginTop: 16 }}>
-                <div>
-                  <div style={{ fontWeight: 600, marginBottom: 8 }}>Informacje</div>
-                  <ul style={{ marginLeft: 18, color: "#374151" }}>
-                    {data.Ui?.Disclaimers?.map((d, i) => (
-                      <li key={i} style={{ marginBottom: 4 }}>{d}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div>
-                  <div style={{ fontWeight: 600, marginBottom: 8 }}>Przykładowe realizacje</div>
-                  <ul style={{ marginLeft: 18 }}>
-                    {data.Ui?.Links?.map((l, i) => (
-                      <li key={i}><a href={l} target="_blank" rel="noreferrer" style={{ color: "#2563eb" }}>{l}</a></li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
+              {/* CTA Kopiuj */}
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 16 }}>
-                <button onClick={copyToClipboard} style={{ padding: "10px 14px", border: `1px solid ${BORDER}`, borderRadius: 10, background: "#fff", color: DARK, cursor: "pointer" }}>
+                <button
+                  onClick={copyToClipboard}
+                  style={{ padding: "10px 14px", border: `1px solid ${BORDER}`, borderRadius: 10, background: "#fff", color: DARK, cursor: "pointer" }}
+                >
                   {copied ? "Skopiowano!" : "Kopiuj tekst do Messengera"}
                 </button>
                 <details>
@@ -409,7 +371,6 @@ const QuotePage: React.FC = () => {
       </div>
     </div>
   );
-  
 };
 
 export default QuotePage;
