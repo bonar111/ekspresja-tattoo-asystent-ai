@@ -8,6 +8,7 @@ import TeamPage from './pages/TeamPage';
 import ArtistPortfolioPage from './pages/ArtistPortfolioPage';
 import BlogPage from './pages/BlogPage';
 import SalePage from './pages/SalePage';
+import QuotePage from './pages/QuotePage';
 
 const App: React.FC = () => {
   return (
@@ -22,6 +23,9 @@ const App: React.FC = () => {
         <Route path="team" element={<TeamPage />} />
         <Route path="artist/:id" element={<ArtistPortfolioPage />} />
         <Route path="blog" element={<BlogPage />} />
+
+        {/* wyceniarka*/}
+        <Route path="wycena" element={<QuotePage />} />
 
         {/* „catch-all” – przekieruj wszystko inne na stronę główną */}
         <Route path="*" element={<Navigate to="/" replace />} />
