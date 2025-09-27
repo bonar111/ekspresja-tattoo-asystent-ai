@@ -1,5 +1,5 @@
 // src/pages/QuotePage.tsx
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import api from "../utils/axiosInstance";
 
 // ===== typy zgodne z backendem =====
@@ -16,7 +16,7 @@ type QuoteResponse = {
   IsMultiSession: boolean; Artists: Artist[]; Examples: string[]; Message: string; CopyText: string; Ui: UiPayload;
 };
 
-// ===== etykiety rozmiarów — ZAKTUALIZOWANE =====
+// ===== etykiety rozmiarów (1..8) =====
 const SIZE_LABELS: Record<number, string> = {
   1: "ok. 1–4 cm",
   2: "ok. 5–7 cm",
@@ -98,14 +98,21 @@ const QuotePage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<QuoteResponse | null>(null);
   const [copied, setCopied] = useState(false);
+  const resultRef = useRef<HTMLDivElement>(null); // ⬅️ do przewinięcia
 
   const canPickPieces = exceptionPiecesOptions[exception]?.max > 0;
 
   async function requestQuote() {
-    setLoading(true); setError(null); setData(null);
+    setLoading(true);
+    setError(null);
+    setData(null);
+
+    // ⬇️ przewiń do sekcji wyników od razu (zobaczysz skeleton)
+    resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+
     try {
       const body = {
-        sizes: [size],                              // nowa siatka 1..8
+        sizes: [size],
         isColour,
         userTattooDescription: buildDescription(exception, exceptionPieces),
         selectedArtist: selectedArtist || null,
@@ -263,7 +270,7 @@ const QuotePage: React.FC = () => {
         </div>
 
         {/* RESULT */}
-        <div className="bg-white text-gray-900 rounded-2xl border border-slate-100 shadow p-4 md:p-5 md:col-span-2">
+        <div ref={resultRef} className="bg-white text-gray-900 rounded-2xl border border-slate-100 shadow p-4 md:p-5 md:col-span-2">
           {!data && !loading && (
             <div className="text-slate-500">Wynik pojawi się tutaj po kliknięciu „Oblicz wycenę”.</div>
           )}
@@ -312,9 +319,7 @@ const QuotePage: React.FC = () => {
                       </div>
                       <div className="mt-2">
                         {link ? (
-                          <a href={link} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline text-sm">
-                            Portfolio
-                          </a>
+                          <a href={link} className="text-blue-600 hover:underline text-sm">Portfolio</a>
                         ) : (
                           <span className="text-slate-400 text-sm">—</span>
                         )}
@@ -344,9 +349,7 @@ const QuotePage: React.FC = () => {
                           <td className="p-3"><b>{final}</b></td>
                           <td className="p-3">
                             {link ? (
-                              <a href={link} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline">
-                                Portfolio
-                              </a>
+                              <a href={link} className="text-blue-600 hover:underline">Portfolio</a>
                             ) : (
                               <span className="text-slate-400">—</span>
                             )}
