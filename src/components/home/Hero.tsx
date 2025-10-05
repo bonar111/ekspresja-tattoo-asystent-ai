@@ -24,7 +24,7 @@ const Hero = () => {
           className="mx-auto max-w-[28rem]"
         >
           <h1 id="hero-heading" className="mb-3 text-[28px] leading-tight font-extrabold sm:text-5xl">
-            Delikatne, kobiece tatuaże w akwareli • Kraków
+            Delikatne, kolorowe kobiece tatuaże
           </h1>
 
           <p className="mb-5 text-base sm:text-xl">
@@ -32,16 +32,20 @@ const Hero = () => {
             <strong>Napisz — wyślemy 2 propozycje i najbliższe terminy.</strong>
           </p>
 
-          <motion.button
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={handleOpenChat}
-            className="w-full sm:w-auto inline-flex items-center justify-center rounded-2xl px-5 py-3 text-base sm:text-lg font-semibold
-                       btn btn-primary shadow-lg"
-            aria-label="Wyślij wiadomość — 2 propozycje i najbliższe terminy w 2–5 minut"
-          >
-            Wyślij wiadomość — 2 propozycje i terminy (2–5 min)
-          </motion.button>
+                <motion.button
+        whileHover={{ scale: 1.04 }}
+        whileTap={{ scale: 0.98 }}
+        onClick={handleOpenChat}
+        className="w-full sm:w-auto inline-flex flex-col items-center justify-center text-center whitespace-normal rounded-2xl
+                  px-5 py-3 text-base sm:text-lg font-semibold leading-[1.15] btn btn-primary shadow-lg gap-0"
+        aria-label="Odbierz inspiracje i terminy w 2–5 minut"
+      >
+        <span className="leading-tight">Odbierz 2 inspiracje + terminy</span>
+        <span className="block text-[11px] font-normal opacity-90 mt-0.5">
+          w 2–5 min • bez zobowiązań
+        </span>
+      </motion.button>
+
 
           <div className="mt-3">
             <a href="#prace" className="inline-flex items-center gap-1 text-sm opacity-90 hover:opacity-100 underline underline-offset-2">
