@@ -29,7 +29,7 @@ const Hero = () => {
 
           <p className="mb-5 text-base sm:text-xl">
             Zobacz nasze prace. Chcesz podobny styl?{" "}
-            <strong>Napisz — wyślemy 2 propozycje i najbliższe terminy.</strong>
+            <strong>Napisz — wyślemy 2 propozycje i najbliższe terminy</strong>
           </p>
 
                 <motion.button
@@ -54,7 +54,7 @@ const Hero = () => {
           </div>
 
           <p className="mt-3 text-xs opacity-90">
-            <strong>4.9★</strong> • Kraków • Bez opłaty • Odpowiadamy w kilka minut
+            <strong>5.0★</strong> • Kraków • Bez opłaty • Odpowiadamy w kilka minut
           </p>
         </motion.div>
       </div>

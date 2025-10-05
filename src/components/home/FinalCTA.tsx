@@ -38,21 +38,27 @@ const FinalCTA = () => {
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              viewport={{ once: true }}
-              className="flex flex-col sm:flex-row gap-4 justify-center"
-            >
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <button
-                  className="btn btn-primary text-lg"
-                  onClick={(e) => openChat({ source: 'final_cta' }, e)}
-                >
-                  Wyślij wiadomość — zacznijmy
-                </button>
-              </motion.div>
-            </motion.div>
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5, delay: 0.4 }}
+  viewport={{ once: true }}
+  className="flex flex-col sm:flex-row gap-4 justify-center"
+>
+  <motion.button
+    whileHover={{ scale: 1.04 }}
+    whileTap={{ scale: 0.98 }}
+    onClick={(e) => openChat({ source: 'final_cta' }, e)}
+    className="w-full sm:w-auto inline-flex flex-col items-center justify-center text-center whitespace-normal rounded-2xl
+               px-5 py-3 text-base sm:text-lg font-semibold leading-[1.15] btn btn-primary shadow-lg gap-0"
+    aria-label="Odbierz inspiracje i terminy w 2–5 minut"
+  >
+    <span className="leading-tight">Odbierz 2 inspiracje + terminy</span>
+    <span className="block text-[11px] font-normal opacity-90 mt-0.5">
+      w 2–5 min • bez zobowiązań
+    </span>
+  </motion.button>
+</motion.div>
+
           </div>
         </div>
       </div>

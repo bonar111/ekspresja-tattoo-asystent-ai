@@ -64,17 +64,24 @@ const InlineCTA = ({ title, subtitle }: { title: string; subtitle: string }) => 
     <div className="container text-center">
       <h3 className="text-2xl stack-tight">{title}</h3>
       <p className="text-gray-300 max-w-2xl mx-auto stack-tight">{subtitle}</p>
+
       <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="btn btn-primary"
+        whileHover={{ scale: 1.04 }}
+        whileTap={{ scale: 0.98 }}
+        className="w-full sm:w-auto inline-flex flex-col items-center justify-center text-center whitespace-normal rounded-2xl
+                   px-5 py-3 text-base sm:text-lg font-semibold leading-[1.15] btn btn-primary shadow-lg gap-0"
+        aria-label="Odbierz inspiracje i terminy w 2–5 minut"
         onClick={(e) => openChat({ source: 'inline_cta', title }, e)}
       >
-        Wyślij wiadomość — 2 propozycje i terminy
+        <span className="leading-tight">Odbierz 2 inspiracje + terminy</span>
+        <span className="block text-[11px] font-normal opacity-90 mt-0.5">
+          w 2–5 min • bez zobowiązań
+        </span>
       </motion.button>
     </div>
   </section>
 );
+
 
 const HomePage = () => {
   useEffect(() => {
