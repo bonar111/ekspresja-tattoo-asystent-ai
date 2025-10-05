@@ -1,5 +1,5 @@
 // src/pages/HomePage.tsx
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 import Hero from '../components/home/Hero';
@@ -16,7 +16,6 @@ import { track } from '../lib/analytics';
 import { BEST, COVERS, homePortfolioItems } from '../data/images';
 import { GridPreset, bestGrid, coversGrid } from '../data/gridConfig';
 
-// --------- pomocnicze: klasy kolumn dla Tailwinda ----------
 const colsToClasses = (c: GridPreset['cols']) =>
   [
     c.base === 1 ? 'grid-cols-1' : c.base === 2 ? 'grid-cols-2' : c.base === 3 ? 'grid-cols-3' : 'grid-cols-4',
@@ -25,28 +24,28 @@ const colsToClasses = (c: GridPreset['cols']) =>
     c.lg ? (c.lg === 1 ? 'lg:grid-cols-1' : c.lg === 2 ? 'lg:grid-cols-2' : c.lg === 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-4') : '',
   ].join(' ');
 
-// --------- hook wykrycia aktualnego breakpointu (Tailwind: sm 640, md 768, lg 1024) ----------
+// ——— liczba kolumn wg breakpointów Tailwinda
 function useCurrentCols(preset: GridPreset['cols']) {
   const [w, setW] = useState<number>(() => (typeof window !== 'undefined' ? window.innerWidth : 0));
-
   useEffect(() => {
     const onR = () => setW(window.innerWidth);
     window.addEventListener('resize', onR);
     return () => window.removeEventListener('resize', onR);
   }, []);
-
-  // Dobierz kolumny jak Tailwind (base <640, sm ≥640, md ≥768, lg ≥1024)
-  const cols = useMemo(() => {
+  return useMemo(() => {
     if (w >= 1024 && preset.lg) return preset.lg;
     if (w >= 768 && preset.md) return preset.md!;
     if (w >= 640 && preset.sm) return preset.sm!;
     return preset.base;
   }, [w, preset]);
-
-  return cols;
 }
 
-/** Siatka z opcją „Zobacz więcej”: 5 wierszy, potem rozwinięcie */
+function getHeaderHeight() {
+  const varVal = getComputedStyle(document.documentElement).getPropertyValue('--header-h') || '72px';
+  return parseInt(varVal, 10) || 72;
+}
+
+/** Siatka z „Zobacz więcej” i przewijaniem do ostatniego wiersza przy „Zwiń” */
 const Grid = ({
   items,
   preset,
@@ -58,61 +57,88 @@ const Grid = ({
   preset: GridPreset;
   maxRows?: number;
   collapsible?: boolean;
-  sectionId: string; // do przewinięcia po „Zwiń”
+  sectionId: string; // unikalne ID sekcji (np. "prace", "covers")
 }) => {
   const fit = preset.fit ?? 'cover';
   const lockAspect = preset.lockAspect ?? true;
   const gap = preset.gapClasses ?? 'gap-3 md:gap-4';
-
   const cols = useCurrentCols(preset.cols);
   const initialCount = maxRows * cols;
 
   const [expanded, setExpanded] = useState(false);
-  const visibleItems = expanded || !collapsible ? items : items.slice(0, Math.min(initialCount, items.length));
-  const hasMore = collapsible && items.length > initialCount;
+  const gridWrapRef = useRef<HTMLDivElement>(null);
 
-  const toggle = () => {
-    // jeśli zwijamy – przewiń z powrotem do sekcji (uwzględnij sticky header)
-    if (expanded) {
+  const hasMore = collapsible && items.length > initialCount;
+  const visibleItems =
+    expanded || !collapsible ? items : items.slice(0, Math.min(initialCount, items.length));
+
+  const scrollToLastVisibleRow = () => {
+    if (!hasMore) return;
+    const lastIdx = Math.min(initialCount, items.length) - 1;
+    // Szukamy ostatniego widocznego kafla po zwinięciu
+    const container = gridWrapRef.current;
+    const tile = container?.querySelector<HTMLElement>(
+      `[data-grid="${sectionId}"] [data-idx="${lastIdx}"]`
+    );
+    if (tile) {
+      const header = getHeaderHeight();
+      const rect = tile.getBoundingClientRect();
+      const y = rect.top + window.pageYOffset + rect.height - header - 12; // dolna krawędź kafla
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    } else {
+      // Fallback: do początku sekcji (lekko poniżej nagłówka)
       const target = document.getElementById(sectionId);
       if (target) {
-        const varVal =
-          getComputedStyle(document.documentElement).getPropertyValue('--header-h') || '72px';
-        const headerH = parseInt(varVal, 10) || 72;
-        const y = target.getBoundingClientRect().top + window.pageYOffset - headerH - 8;
+        const header = getHeaderHeight();
+        const y = target.getBoundingClientRect().top + window.pageYOffset - header - 8;
         window.scrollTo({ top: y, behavior: 'smooth' });
       }
     }
-    setExpanded((v) => !v);
+  };
+
+  const toggle = () => {
+    if (expanded) {
+      // Najpierw zwijamy, potem po wyrenderowaniu przewijamy do końca ostatniego widocznego wiersza
+      setExpanded(false);
+      requestAnimationFrame(() => {
+        // jeszcze jedna klatka, aby wysokości się przeliczyły
+        requestAnimationFrame(scrollToLastVisibleRow);
+      });
+    } else {
+      setExpanded(true);
+    }
   };
 
   return (
     <>
-      <div className={`grid ${colsToClasses(preset.cols)} ${gap}`}>
-        {visibleItems.map((src, i) => (
-          <motion.button
-            key={`${src}-${i}`}
-            type="button"
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.35, delay: (i % (cols * 2)) * 0.03 }}
-            className={`overflow-hidden rounded-lg bg-metallic ${lockAspect ? 'aspect-[3/4] sm:aspect-square' : ''}`}
-            onClick={(e) => {
-              track('Grid_Image_Click', { index: i, section: sectionId });
-              openChat({ source: 'grid_image', index: i, section: sectionId }, e);
-            }}
-            aria-label="Napisz do nas — przygotujemy podobny projekt"
-          >
-            <img
-              src={src}
-              alt=""
-              loading={i === 0 ? 'eager' : 'lazy'}
-              decoding="async"
-              className={`w-full ${lockAspect ? 'h-full' : 'h-auto'} ${fit === 'cover' ? 'object-cover' : 'object-contain'}`}
-            />
-          </motion.button>
-        ))}
+      <div ref={gridWrapRef}>
+        <div className={`grid ${colsToClasses(preset.cols)} ${gap}`} data-grid={sectionId}>
+          {visibleItems.map((src, i) => (
+            <motion.button
+              key={`${src}-${i}`}
+              type="button"
+              data-idx={i} // <- ważne dla przewijania
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.35, delay: (i % (cols * 2)) * 0.03 }}
+              className={`overflow-hidden rounded-lg bg-metallic ${lockAspect ? 'aspect-[3/4] sm:aspect-square' : ''}`}
+              onClick={(e) => {
+                track('Grid_Image_Click', { index: i, section: sectionId });
+                openChat({ source: 'grid_image', index: i, section: sectionId }, e);
+              }}
+              aria-label="Napisz do nas — przygotujemy podobny projekt"
+            >
+              <img
+                src={src}
+                alt=""
+                loading={i === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+                className={`w-full ${lockAspect ? 'h-full' : 'h-auto'} ${fit === 'cover' ? 'object-cover' : 'object-contain'}`}
+              />
+            </motion.button>
+          ))}
+        </div>
       </div>
 
       {hasMore && (
@@ -178,13 +204,7 @@ const HomePage = () => {
             Delikatna akwarela, cover-up i tatuaże na bliznach — zobacz efekty.
           </p>
 
-          <Grid
-            items={BEST}
-            preset={bestGrid}
-            maxRows={5}
-            collapsible
-            sectionId="prace"
-          />
+          <Grid items={BEST} preset={bestGrid} maxRows={5} collapsible sectionId="prace" />
         </div>
       </section>
 
@@ -210,13 +230,7 @@ const HomePage = () => {
             Stare prace zmieniamy w świeże — Before/After i zagojone efekty.
           </p>
 
-          <Grid
-            items={COVERS}
-            preset={coversGrid}
-            maxRows={5}
-            collapsible
-            sectionId="covers"
-          />
+          <Grid items={COVERS} preset={coversGrid} maxRows={5} collapsible sectionId="covers" />
         </div>
       </section>
 
