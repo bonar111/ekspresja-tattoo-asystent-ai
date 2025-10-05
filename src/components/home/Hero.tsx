@@ -20,10 +20,10 @@ const Hero = () => {
           className="max-w-2xl mx-auto"
         >
           <h1 className="mb-4 text-4xl sm:text-5xl font-bold leading-tight">
-            Kolorowe, kobiece tatuaże
+            Subtelne, kobiece tatuaże w kolorze
           </h1>
           <p className="text-lg sm:text-xl mb-8">
-            Opowiedz nam o swoim pomyśle – Wycenimy Twój tatuaż w 2-3 minuty
+            Szybka wycena i dostępne terminy - bez zobowiązań
           </p>
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -31,7 +31,7 @@ const Hero = () => {
             className="btn btn-primary text-lg"
             onClick={(e) => openChat({ source: 'hero_cta' }, e)}
           >
-            Rozpocznij konsultacje
+            Kliknij i zobacz wolne terminy (2 min)
           </motion.button>
         </motion.div>
       </div>
