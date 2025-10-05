@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+// src/pages/HomePage.tsx
+import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 
 import Hero from '../components/home/Hero';
@@ -15,6 +16,7 @@ import { track } from '../lib/analytics';
 import { BEST, COVERS, homePortfolioItems } from '../data/images';
 import { GridPreset, bestGrid, coversGrid } from '../data/gridConfig';
 
+// --------- pomocnicze: klasy kolumn dla Tailwinda ----------
 const colsToClasses = (c: GridPreset['cols']) =>
   [
     c.base === 1 ? 'grid-cols-1' : c.base === 2 ? 'grid-cols-2' : c.base === 3 ? 'grid-cols-3' : 'grid-cols-4',
@@ -23,39 +25,109 @@ const colsToClasses = (c: GridPreset['cols']) =>
     c.lg ? (c.lg === 1 ? 'lg:grid-cols-1' : c.lg === 2 ? 'lg:grid-cols-2' : c.lg === 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-4') : '',
   ].join(' ');
 
-/** Siatka: 1) LCP: pierwsze zdjęcie eager; 2) klik w kafel — otwiera Messenger; 3) eventy pomocnicze */
-const Grid = ({ items, preset }: { items: string[]; preset: GridPreset }) => {
+// --------- hook wykrycia aktualnego breakpointu (Tailwind: sm 640, md 768, lg 1024) ----------
+function useCurrentCols(preset: GridPreset['cols']) {
+  const [w, setW] = useState<number>(() => (typeof window !== 'undefined' ? window.innerWidth : 0));
+
+  useEffect(() => {
+    const onR = () => setW(window.innerWidth);
+    window.addEventListener('resize', onR);
+    return () => window.removeEventListener('resize', onR);
+  }, []);
+
+  // Dobierz kolumny jak Tailwind (base <640, sm ≥640, md ≥768, lg ≥1024)
+  const cols = useMemo(() => {
+    if (w >= 1024 && preset.lg) return preset.lg;
+    if (w >= 768 && preset.md) return preset.md!;
+    if (w >= 640 && preset.sm) return preset.sm!;
+    return preset.base;
+  }, [w, preset]);
+
+  return cols;
+}
+
+/** Siatka z opcją „Zobacz więcej”: 5 wierszy, potem rozwinięcie */
+const Grid = ({
+  items,
+  preset,
+  maxRows = 5,
+  collapsible = true,
+  sectionId,
+}: {
+  items: string[];
+  preset: GridPreset;
+  maxRows?: number;
+  collapsible?: boolean;
+  sectionId: string; // do przewinięcia po „Zwiń”
+}) => {
   const fit = preset.fit ?? 'cover';
   const lockAspect = preset.lockAspect ?? true;
   const gap = preset.gapClasses ?? 'gap-3 md:gap-4';
 
+  const cols = useCurrentCols(preset.cols);
+  const initialCount = maxRows * cols;
+
+  const [expanded, setExpanded] = useState(false);
+  const visibleItems = expanded || !collapsible ? items : items.slice(0, Math.min(initialCount, items.length));
+  const hasMore = collapsible && items.length > initialCount;
+
+  const toggle = () => {
+    // jeśli zwijamy – przewiń z powrotem do sekcji (uwzględnij sticky header)
+    if (expanded) {
+      const target = document.getElementById(sectionId);
+      if (target) {
+        const varVal =
+          getComputedStyle(document.documentElement).getPropertyValue('--header-h') || '72px';
+        const headerH = parseInt(varVal, 10) || 72;
+        const y = target.getBoundingClientRect().top + window.pageYOffset - headerH - 8;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }
+    setExpanded((v) => !v);
+  };
+
   return (
-    <div className={`grid ${colsToClasses(preset.cols)} ${gap}`}>
-      {items.map((src, i) => (
-        <motion.button
-          key={i}
-          type="button"
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.35, delay: i * 0.03 }}
-          className={`overflow-hidden rounded-lg bg-metallic ${lockAspect ? 'aspect-[3/4] sm:aspect-square' : ''}`}
-          onClick={(e) => {
-            track('Grid_Image_Click', { index: i });
-            openChat({ source: 'grid_image', index: i }, e as any);
-          }}
-          aria-label="Napisz do nas — przygotujemy podobny projekt"
-        >
-          <img
-            src={src}
-            alt=""
-            loading={i === 0 ? 'eager' : 'lazy'}
-            decoding="async"
-            className={`w-full ${lockAspect ? 'h-full' : 'h-auto'} ${fit === 'cover' ? 'object-cover' : 'object-contain'}`}
-          />
-        </motion.button>
-      ))}
-    </div>
+    <>
+      <div className={`grid ${colsToClasses(preset.cols)} ${gap}`}>
+        {visibleItems.map((src, i) => (
+          <motion.button
+            key={`${src}-${i}`}
+            type="button"
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.35, delay: (i % (cols * 2)) * 0.03 }}
+            className={`overflow-hidden rounded-lg bg-metallic ${lockAspect ? 'aspect-[3/4] sm:aspect-square' : ''}`}
+            onClick={(e) => {
+              track('Grid_Image_Click', { index: i, section: sectionId });
+              openChat({ source: 'grid_image', index: i, section: sectionId }, e);
+            }}
+            aria-label="Napisz do nas — przygotujemy podobny projekt"
+          >
+            <img
+              src={src}
+              alt=""
+              loading={i === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+              className={`w-full ${lockAspect ? 'h-full' : 'h-auto'} ${fit === 'cover' ? 'object-cover' : 'object-contain'}`}
+            />
+          </motion.button>
+        ))}
+      </div>
+
+      {hasMore && (
+        <div className="text-center mt-4">
+          <button
+            className="btn btn-secondary"
+            onClick={toggle}
+            aria-expanded={expanded}
+            aria-controls={sectionId}
+          >
+            {expanded ? 'Zwiń' : 'Zobacz więcej'}
+          </button>
+        </div>
+      )}
+    </>
   );
 };
 
@@ -68,7 +140,7 @@ const InlineCTA = ({ title, subtitle }: { title: string; subtitle: string }) => 
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         className="btn btn-primary"
-        onClick={(e) => openChat({ source: 'inline_cta', title }, e as any)}
+        onClick={(e) => openChat({ source: 'inline_cta', title }, e)}
       >
         Wyślij wiadomość — 2 propozycje i terminy
       </motion.button>
@@ -89,7 +161,6 @@ const HomePage = () => {
       <section
         id="prace"
         className="section-tight bg-graphite"
-        // klucz: sprawia, że przewijanie do #prace uwzględnia sticky navbar
         style={{ scrollMarginTop: 'var(--header-h, 72px)' }}
       >
         <div className="container">
@@ -107,7 +178,13 @@ const HomePage = () => {
             Delikatna akwarela, cover-up i tatuaże na bliznach — zobacz efekty.
           </p>
 
-          <Grid items={BEST} preset={bestGrid} />
+          <Grid
+            items={BEST}
+            preset={bestGrid}
+            maxRows={5}
+            collapsible
+            sectionId="prace"
+          />
         </div>
       </section>
 
@@ -117,7 +194,7 @@ const HomePage = () => {
       />
 
       {/* COVERS */}
-      <section className="section-tight bg-metallic">
+      <section className="section-tight bg-metallic" style={{ scrollMarginTop: 'var(--header-h, 72px)' }}>
         <div className="container">
           <motion.h2
             initial={{ opacity: 0, y: 14 }}
@@ -133,7 +210,13 @@ const HomePage = () => {
             Stare prace zmieniamy w świeże — Before/After i zagojone efekty.
           </p>
 
-          <Grid items={COVERS} preset={coversGrid} />
+          <Grid
+            items={COVERS}
+            preset={coversGrid}
+            maxRows={5}
+            collapsible
+            sectionId="covers"
+          />
         </div>
       </section>
 
