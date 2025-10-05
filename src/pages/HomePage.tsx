@@ -227,7 +227,7 @@ const HomePage = () => {
             Covery tatuażu
           </motion.h2>
           <p className="text-center text-gray-300 stack-tight">
-            Stare prace zmieniamy w świeże — Before/After i zagojone efekty.
+            Stare prace zmieniamy w dzieła sztuki — Przed/Po i zagojone efekty.
           </p>
 
           <Grid items={COVERS} preset={coversGrid} maxRows={5} collapsible sectionId="covers" />
