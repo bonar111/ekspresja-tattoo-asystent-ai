@@ -7,7 +7,7 @@
  *   Warstwa globalna   *
  * ==================== */
 
- /* Fallback wysokości nagłówka – nadpisze ją Navbar w runtime */
+/* Fallback wysokości nagłówka – nadpisze ją Navbar w runtime */
 :root { --header-h: 72px; }
 
 @layer base {
@@ -28,7 +28,10 @@
 
   /* przyciski itd. */
   .btn { @apply inline-flex items-center justify-center px-6 py-3 text-lg font-medium rounded-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2; }
-  .btn-primary { @apply bg-white text-graphite hover:bg-neon hover:text-white focus:ring-neon; }
+
+  /* WZMOCNIONE: pełny kolor, lepszy kontrast i hover */
+  .btn-primary { @apply bg-neon text-white hover:opacity-90 focus:ring-neon; }
+
   .btn-secondary { @apply border-2 border-white text-white hover:bg-white hover:text-graphite focus:ring-white; }
   .form-input { @apply w-full px-4 py-3 bg-metallic border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-neon text-white placeholder-gray-400; }
   .link-hover { @apply relative overflow-hidden; }

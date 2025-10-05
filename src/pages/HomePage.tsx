@@ -10,6 +10,7 @@ import Process from '../components/home/Process';
 import FinalCTA from '../components/home/FinalCTA';
 import ArtistsTeaser from '../components/home/ArtistsTeaser';
 import { openChat } from '../lib/openChat';
+import { track } from '../lib/analytics';
 
 import { BEST, COVERS, homePortfolioItems } from '../data/images';
 import { GridPreset, bestGrid, coversGrid } from '../data/gridConfig';
@@ -22,6 +23,7 @@ const colsToClasses = (c: GridPreset['cols']) =>
     c.lg ? (c.lg === 1 ? 'lg:grid-cols-1' : c.lg === 2 ? 'lg:grid-cols-2' : c.lg === 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-4') : '',
   ].join(' ');
 
+/** Siatka: 1) LCP: pierwsze zdjęcie eager; 2) klik w kafel — otwiera Messenger; 3) eventy pomocnicze */
 const Grid = ({ items, preset }: { items: string[]; preset: GridPreset }) => {
   const fit = preset.fit ?? 'cover';
   const lockAspect = preset.lockAspect ?? true;
@@ -30,21 +32,28 @@ const Grid = ({ items, preset }: { items: string[]; preset: GridPreset }) => {
   return (
     <div className={`grid ${colsToClasses(preset.cols)} ${gap}`}>
       {items.map((src, i) => (
-        <motion.div
+        <motion.button
           key={i}
+          type="button"
           initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.35, delay: i * 0.03 }}
           className={`overflow-hidden rounded-lg bg-metallic ${lockAspect ? 'aspect-[3/4] sm:aspect-square' : ''}`}
+          onClick={(e) => {
+            track('Grid_Image_Click', { index: i });
+            openChat({ source: 'grid_image', index: i }, e);
+          }}
+          aria-label="Napisz do nas — przygotujemy podobny projekt"
         >
           <img
             src={src}
             alt=""
-            loading="lazy"
+            loading={i === 0 ? 'eager' : 'lazy'}
+            decoding="async"
             className={`w-full ${lockAspect ? 'h-full' : 'h-auto'} ${fit === 'cover' ? 'object-cover' : 'object-contain'}`}
           />
-        </motion.div>
+        </motion.button>
       ))}
     </div>
   );
@@ -61,7 +70,7 @@ const InlineCTA = ({ title, subtitle }: { title: string; subtitle: string }) => 
         className="btn btn-primary"
         onClick={(e) => openChat({ source: 'inline_cta', title }, e)}
       >
-        Rozpocznij konsultacje
+        Wyślij wiadomość — 2 propozycje i terminy
       </motion.button>
     </div>
   </section>
@@ -77,19 +86,20 @@ const HomePage = () => {
       <Hero />
 
       {/* BEST */}
-      <section className="section-tight bg-graphite">
+      <section id="prace" className="section-tight bg-graphite">
         <div className="container">
           <motion.h2
             initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.6 }}
             transition={{ duration: 0.4 }}
             className="text-center stack-tight"
+            onViewportEnter={() => track('Gallery_Open', { section: 'best' })}
           >
             Zobacz nasze prace
           </motion.h2>
           <p className="text-center text-gray-300 stack-tight">
-            Bezpłatna wizualizacja + wstępna wycena na czacie, bez zobowiązań
+            Delikatna akwarela, cover-up i tatuaże na bliznach — zobacz efekty.
           </p>
 
           <Grid items={BEST} preset={bestGrid} />
@@ -98,7 +108,7 @@ const HomePage = () => {
 
       <InlineCTA
         title="Widzisz coś w swoim stylu?"
-        subtitle="Daj nam 2–3 minuty — oszacujemy cenę i pokażemy dostępne terminy."
+        subtitle="Napisz — w 2–5 min podeślemy 2 propozycje i terminy."
       />
 
       {/* COVERS */}
@@ -107,14 +117,15 @@ const HomePage = () => {
           <motion.h2
             initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.6 }}
             transition={{ duration: 0.4 }}
             className="text-center stack-tight"
+            onViewportEnter={() => track('Gallery_Open', { section: 'covers' })}
           >
             Covery tatuażu
           </motion.h2>
           <p className="text-center text-gray-300 stack-tight">
-            Zmieniamy stare prace w nowe dzieła — zobacz przykłady coverów.
+            Stare prace zmieniamy w świeże — Before/After i zagojone efekty.
           </p>
 
           <Grid items={COVERS} preset={coversGrid} />
@@ -123,15 +134,14 @@ const HomePage = () => {
 
       <InlineCTA
         title="Masz pomysł na tatuaż?"
-        subtitle="Pokaż nam swoją starą pracę lub inspiracje — w kilka minut podpowiemy, co możemy wyczarować."
+        subtitle="Wyślij zdjęcie inspiracji lub starego tatuażu — podamy orientacyjną cenę i terminy."
       />
 
       <ArtistsTeaser
         artists={[
           { id: 'marzena-bonar',   name: 'Marzena Bonar',   specialty: 'Kolor, akwarela, covery, blizny', image: 'https://static.wixstatic.com/media/be828f_384a9c93395e4b8997fa962903b6cfd6~mv2.jpg' },
-          { id: 'olena',            name: 'Olena',            specialty: 'Subtelne i kobiece tatuaże',      image: 'https://static.wixstatic.com/media/be828f_bba99e895c8e493580e7cf11e0b1f26f~mv2.jpg' },
-          { id: 'kamil-talar',      name: 'Kamil Talar',      specialty: 'Graficzne, kolor, sketch, dotwork', image: 'https://static.wixstatic.com/media/be828f_c5abab41d0964feeba241ec519b23580~mv2.jpg' },
-          { id: 'gabriela-golonka', name: 'Gabriela Golonka', specialty: 'Linearne, kolor, cover-up, blizny', image: 'https://static.wixstatic.com/media/be828f_a0474707cb494a39b14fdffcfb8e24a5~mv2.jpg' },
+          { id: 'olena',           name: 'Olena',           specialty: 'Subtelne i kobiece tatuaże',       image: 'https://static.wixstatic.com/media/be828f_bba99e895c8e493580e7cf11e0b1f26f~mv2.jpg' },
+          { id: 'kamil-talar',     name: 'Kamil Talar',     specialty: 'Graficzne, kolor, sketch, dotwork', image: 'https://static.wixstatic.com/media/be828f_c5abab41d0964feeba241ec519b23580~mv2.jpg' },
         ]}
       />
 

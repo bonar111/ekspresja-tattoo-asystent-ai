@@ -15,7 +15,7 @@ const MobileNav = () => {
         >
           <Calendar size={20} className="mb-1" />
           <span className="text-xs font-medium">
-            <span className="text-neon">3</span> wolne terminy w tym tygodniu 🔥
+            2 propozycje + terminy w 2–5 min
           </span>
         </a>
 
@@ -24,9 +24,7 @@ const MobileNav = () => {
           onClick={(e) => openChat({ source: 'mobile_nav_button' }, e)}
         >
           <MessageCircle size={20} className="mb-1 animate-pulse-subtle" />
-          <span className="text-xs font-medium flex items-center">
-            Porozmawiaj <span className="ml-1 text-[10px] bg-neon text-white px-1 rounded">ZA DARMO</span>
-          </span>
+          <span className="text-xs font-medium">Wyślij wiadomość</span>
         </button>
       </div>
     </div>

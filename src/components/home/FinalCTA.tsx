@@ -6,7 +6,7 @@ const FinalCTA = () => {
     <section className="section bg-metallic">
       <div className="container">
         <div className="relative bg-graphite rounded-xl overflow-hidden">
-          <div 
+          <div
             className="absolute inset-0 opacity-20"
             style={{
               backgroundImage: 'url(https://images.pexels.com/photos/1777834/pexels-photo-1777834.jpeg?auto=compress&cs=tinysrgb&w=1600)',
@@ -14,9 +14,9 @@ const FinalCTA = () => {
               backgroundPosition: 'center'
             }}
           />
-          
+
           <div className="relative z-10 p-8 md:p-16 text-center">
-            <motion.h2 
+            <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
@@ -25,7 +25,7 @@ const FinalCTA = () => {
             >
               Zrób pierwszy krok do swojego tatuażu
             </motion.h2>
-            
+
             <motion.p
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -33,9 +33,10 @@ const FinalCTA = () => {
               viewport={{ once: true }}
               className="text-xl stack-tight max-w-2xl mx-auto"
             >
-              Szybka konsultacja online na czacie pokaże Ci wstępną wycenę, przykładowe projekty oraz dostępne terminy. Wszystko w kilka minut – bez żadnych zobowiązań
+              Szybka konsultacja na czacie: wyślemy Ci <b>orientacyjną wycenę</b>, <b>2 propozycje stylu</b> i <b>najbliższe terminy</b>.
+              Wszystko w kilka minut — bez zobowiązań.
             </motion.p>
-            
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -48,7 +49,7 @@ const FinalCTA = () => {
                   className="btn btn-primary text-lg"
                   onClick={(e) => openChat({ source: 'final_cta' }, e)}
                 >
-                  Rozpocznij konsultację
+                  Wyślij wiadomość — zacznijmy
                 </button>
               </motion.div>
             </motion.div>
