@@ -16,7 +16,7 @@ export const BEST: string[] = [
 ];
 
 export const COVERS: string[] = [
-  'https://static.wixstatic.com/media/be828f_c8f9eeff4f6e48af93149ad4ea05adc4~mv2.jpg',
+  'https://static.wixstatic.com/media/be828f_5c1266422a5d4f79953b8906fa71404d~mv2.jpg',
   'https://static.wixstatic.com/media/be828f_8cd3f6c2bea141228deaf5cd44030dcd~mv2.jpg',
   'https://static.wixstatic.com/media/be828f_eb39a7f4e54547169f1f8d42afbf06d5~mv2.jpg',
   'https://static.wixstatic.com/media/be828f_1557a30042744b928b1791ca2db0e0cb~mv2.jpg',
