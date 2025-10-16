@@ -9,25 +9,28 @@ import ArtistPortfolioPage from './pages/ArtistPortfolioPage';
 import BlogPage from './pages/BlogPage';
 import SalePage from './pages/SalePage';
 import QuotePage from './pages/QuotePage';
+import OfferLandingPage from './pages/OfferLandingPage'; // <— WAŻNE: import
 
 const App: React.FC = () => {
   return (
     <Routes>
-      {/* wspólny layout (header/footer) */}
       <Route path="/" element={<Layout />}>
         {/* strona główna */}
         <Route index element={<HomePage />} />
         <Route path="sale" element={<SalePage />} />
 
-        {/* strona z portfolio */}
+        {/* NOWE: landing kampanii */}
+        <Route path="oferta/:slug" element={<OfferLandingPage />} />
+
+        {/* portfolio */}
         <Route path="team" element={<TeamPage />} />
         <Route path="artist/:id" element={<ArtistPortfolioPage />} />
         <Route path="blog" element={<BlogPage />} />
 
-        {/* wyceniarka*/}
+        {/* wycena */}
         <Route path="wycena" element={<QuotePage />} />
 
-        {/* „catch-all” – przekieruj wszystko inne na stronę główną */}
+        {/* catch-all */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>

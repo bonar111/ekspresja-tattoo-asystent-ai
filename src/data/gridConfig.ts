@@ -18,10 +18,11 @@ export const bestGrid: GridPreset = {
   gapClasses: 'gap-3 md:gap-4',
 };
 
-/** COVERS – 1 kolumna wszędzie, BEZ przycinania, naturalna wysokość */
+/** COVERS */
 export const coversGrid: GridPreset = {
-  cols: { base: 1, sm: 1, md: 1, lg: 1 },
+  cols: { base: 1, sm: 1, md: 2, lg: 2 },
   fit: 'contain',
   lockAspect: false,
-  gapClasses: 'gap-4',
+  gapClasses: 'gap-4 md:gap-5',
 };
+
