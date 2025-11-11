@@ -34,6 +34,7 @@ const ARTISTS = [
   { label: "Olena Kowalczyk", value: "Olena Kowalczyk" },
   { label: "Kamil Talar", value: "Kamil Talar" },
   { label: "Zyta Nyznar", value: "Zyta Nyznar" },
+  { label: "Marcin Kudosz", value: "Marcin Kudosz" },
 ];
 
 const EXCEPTIONS = [

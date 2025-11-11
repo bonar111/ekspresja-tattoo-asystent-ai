@@ -9,7 +9,7 @@ import ArtistPortfolioPage from './pages/ArtistPortfolioPage';
 import BlogPage from './pages/BlogPage';
 import SalePage from './pages/SalePage';
 import QuotePage from './pages/QuotePage';
-import OfferLandingPage from './pages/OfferLandingPage'; // <— WAŻNE: import
+import OfferLandingPage from './pages/OfferLandingPage';
 
 const App: React.FC = () => {
   return (
