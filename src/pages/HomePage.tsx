@@ -109,6 +109,13 @@ const HomePage = () => {
             image:
               'https://static.wixstatic.com/media/be828f_c5abab41d0964feeba241ec519b23580~mv2.jpg',
           },
+          {
+            id: 'marcin-kudosz',
+            name: 'Kamil Talar',
+            specialty: 'Kolorowe tatuaże, realizm, portrety, covery',
+            image:
+              'https://static.wixstatic.com/media/be828f_59e2f9f789254b25b5cbc50ea9b77249~mv2.jpg',
+          },
         ]}
       />
 
