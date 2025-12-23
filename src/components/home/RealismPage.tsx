@@ -17,6 +17,7 @@ import { bestGrid, coversGrid } from '../../data/gridConfig';
 import { REALISM_MAIN, REALISM_SECONDARY, realismPortfolioItems } from '../../data/realismImages';
 import BenefitsRealism from "./Benefits";
 import FinalCTARealism from '../home/FinalCTARealism';
+import ArtistsTeaserRealizm from './ArtistsTeaserRealizm';
 
 const RealismPage = () => {
   useEffect(() => {
@@ -95,7 +96,7 @@ const RealismPage = () => {
         subtitle="Napisz ile cm i gdzie ma być. Damy orientacyjną wycenę i plan sesji."
       />
 
-      <ArtistsTeaser
+      <ArtistsTeaserRealizm
         title="Kto robi realizm?"
         artists={[
           {
@@ -103,6 +104,18 @@ const RealismPage = () => {
             name: 'Marcin Kudosz',
             specialty: 'Kolorowy realizm, portrety, duże projekty',
             image: 'https://static.wixstatic.com/media/be828f_59e2f9f789254b25b5cbc50ea9b77249~mv2.jpg',
+          },
+          {
+            id: 'andrev',
+            name: 'Andrev',
+            specialty: 'Kolorowy realizm, covery, duże projekty',
+            image: 'https://static.wixstatic.com/media/be828f_c0202e795bcd46a0af70478ab5ffad97~mv2.jpg',
+          },
+          {
+            id: 'jarek',
+            name: 'jarek',
+            specialty: 'Kolorowy realizm, covery, duże projekty',
+            image: 'https://static.wixstatic.com/media/be828f_b523c8126ede42a58d2e8b26c02b1b37~mv2.jpg',
           },
         ]}
       />

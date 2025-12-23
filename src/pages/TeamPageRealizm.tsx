@@ -13,28 +13,7 @@ interface Artist {
 
 
 const artists: Artist[] = [
-  {
-    id: 'marzena-bonar',
-    name: 'Marzena Bonar',
-    specialty: 'Kolorowe tatuaże akwarelowe, covery, tatuaże na bliznach',
-    image: 'https://static.wixstatic.com/media/be828f_384a9c93395e4b8997fa962903b6cfd6~mv2.jpg/v1/fill/w_950,h_943,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/be828f_384a9c93395e4b8997fa962903b6cfd6~mv2.jpg',
-    bio: 'Specjalistka od kolorowych tatuaży akwarelowych, coverów i tatuaży na bliznach. Tworzy wyjątkowe wzory, pomagając klientom wyrazić siebie na nowo.'
-  },
-  {
-    id: 'kamil-talar',
-    name: 'Kamil Talar',
-    specialty: 'Tatuaże graficzne, kolorowe, sketch, dotwork',
-    image: 'https://static.wixstatic.com/media/be828f_c5abab41d0964feeba241ec519b23580~mv2.jpg/v1/fill/w_952,h_735,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/be828f_c5abab41d0964feeba241ec519b23580~mv2.jpg',
-    bio: 'Specjalizuje się w tatuażach graficznych, kolorowych, sketch oraz dotwork. Jego prace łączą dynamiczny styl szkicu z precyzyjnym cieniowaniem kropek, tworząc unikalne wzory pełne detali i intensywnych kolorów.'
-  },
-  {
-    id: 'olena',
-    name: 'Olena',
-    specialty: 'Subtelne i kobiece tatuaże',
-    image: 'https://static.wixstatic.com/media/be828f_bba99e895c8e493580e7cf11e0b1f26f~mv2.jpg/v1/fill/w_950,h_891,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/be828f_bba99e895c8e493580e7cf11e0b1f26f~mv2.jpg',
-    bio: 'Utalentowana tatuażystka, która specjalizuje się w tworzeniu subtelnych i kobiecych tatuaży. Jej prace są pełne lekkości i artystycznego wyrazu, oddając piękno w najczystszej formie.'
-  },
-  {
+    {
     id: 'marcin-kudosz',
     name: 'Marcin Kudosz',
     specialty: 'Kolorowy realizm, portrety, duże projekty',
@@ -57,7 +36,7 @@ const artists: Artist[] = [
   }
 ];
 
-const TeamPage: React.FC = () => {
+const TeamPageRealizm: React.FC = () => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -74,7 +53,7 @@ const TeamPage: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <h1 className="mb-4 text-4xl font-heading">Poznaj Nasz Zespół</h1>
+          <h1 className="mb-4 text-4xl font-heading">Poznaj Nasz Zespół Realistów</h1>
           <p className="max-w-2xl mx-auto text-lg text-gray-300">
             Nasz zespół to grupa utalentowanych artystów, którzy z pasją tworzą wyjątkowe tatuaże.
           </p>
@@ -91,7 +70,7 @@ const TeamPage: React.FC = () => {
               onHoverStart={() => setHoveredId(artist.id)}
               onHoverEnd={() => setHoveredId(null)}
             >
-              <Link to={`/artist/${artist.id}`}>
+              <Link to={`/artistrealizm/${artist.id}`}>
                 <div className="relative overflow-hidden rounded-lg aspect-[3/4] bg-metallic">
                   <img
                     src={artist.image}
@@ -130,4 +109,4 @@ const TeamPage: React.FC = () => {
   );
 };
 
-export default TeamPage;
+export default TeamPageRealizm;

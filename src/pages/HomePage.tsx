@@ -116,6 +116,13 @@ const HomePage = () => {
             image:
               'https://static.wixstatic.com/media/be828f_59e2f9f789254b25b5cbc50ea9b77249~mv2.jpg',
           },
+          {
+            id: 'andrev',
+            name: 'Andrev',
+            specialty: 'Kolorowy realizm, covery, duże projekty',
+            image:
+              'https://static.wixstatic.com/media/be828f_c0202e795bcd46a0af70478ab5ffad97~mv2.jpg',
+          },
         ]}
       />
 

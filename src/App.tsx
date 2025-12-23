@@ -11,6 +11,8 @@ import SalePage from './pages/SalePage';
 import QuotePage from './pages/QuotePage';
 import OfferLandingPage from './pages/OfferLandingPage';
 import RealismPage from './components/home/RealismPage';
+import TeamPageRealizm from './pages/TeamPageRealizm';
+import ArtistPortfolioPageRealizm from './pages/ArtistPortfolioPageRealizm';
 
 const App: React.FC = () => {
   return (
@@ -28,7 +30,9 @@ const App: React.FC = () => {
 
         {/* portfolio */}
         <Route path="team" element={<TeamPage />} />
+        <Route path="teamrealizm" element={<TeamPageRealizm />} />
         <Route path="artist/:id" element={<ArtistPortfolioPage />} />
+        <Route path="artistrealizm/:id" element={<ArtistPortfolioPageRealizm />} />
         <Route path="blog" element={<BlogPage />} />
 
         {/* wycena */}

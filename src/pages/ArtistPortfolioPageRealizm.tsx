@@ -213,7 +213,7 @@ const artistsData: Record<string, ArtistData> = {
   },
 };
 
-const ArtistPortfolioPage: React.FC = () => {
+const ArtistPortfolioPageRealizm: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [artist, setArtist] = useState<ArtistData | null>(null);
 
@@ -229,7 +229,7 @@ const ArtistPortfolioPage: React.FC = () => {
     return (
       <div className="container py-32 text-center">
         <h2>Artysta nie znaleziony</h2>
-        <Link to="/team" className="btn btn-primary mt-4">Powrót do zespołu</Link>
+        <Link to="/teamrealizm" className="btn btn-primary mt-4">Powrót do zespołu</Link>
       </div>
     );
   }
@@ -237,7 +237,7 @@ const ArtistPortfolioPage: React.FC = () => {
   return (
     <div className="pt-24 pb-20">
       <div className="container">
-        <Link to="/team" className="inline-flex items-center link-hover mb-8">
+        <Link to="/teamrealizm" className="inline-flex items-center link-hover mb-8">
           <ArrowLeft size={20} className="mr-2" />
           Powrót do zespołu
         </Link>
@@ -319,4 +319,4 @@ const ArtistPortfolioPage: React.FC = () => {
   );
 };
 
-export default ArtistPortfolioPage;
+export default ArtistPortfolioPageRealizm;
