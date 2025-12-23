@@ -10,6 +10,7 @@ import BlogPage from './pages/BlogPage';
 import SalePage from './pages/SalePage';
 import QuotePage from './pages/QuotePage';
 import OfferLandingPage from './pages/OfferLandingPage';
+import RealismPage from './components/home/RealismPage';
 
 const App: React.FC = () => {
   return (
@@ -21,6 +22,9 @@ const App: React.FC = () => {
 
         {/* NOWE: landing kampanii */}
         <Route path="oferta/:slug" element={<OfferLandingPage />} />
+
+        <Route path="realizm/:slug" element={<RealismPage />} />
+
 
         {/* portfolio */}
         <Route path="team" element={<TeamPage />} />

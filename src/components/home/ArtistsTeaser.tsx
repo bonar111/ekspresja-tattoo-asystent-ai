@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import { openChat } from '../../lib/openChat';
 
 type Artist = { id: string; name: string; specialty: string; image: string };
-interface Props { artists: Artist[] }
+interface Props { artists: Artist[]; title?: string }
 
-const ArtistsTeaser = ({ artists }: Props) => {
+const ArtistsTeaser = ({ artists, title = 'Kto tworzy takie prace?' }: Props) => {
   const handleChat = (id: string, e: React.MouseEvent) =>
     openChat({ source: 'artists_teaser', artistId: id }, e);
 
@@ -18,7 +18,7 @@ const ArtistsTeaser = ({ artists }: Props) => {
           transition={{ duration: 0.4 }} viewport={{ once: true }}
           className="text-center stack-tight"
         >
-          Kto tworzy takie prace?
+          {title}
         </motion.h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
